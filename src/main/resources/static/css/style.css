@@ -1,0 +1,13 @@
+.nav-link {
+    color: #5ce1e6;
+}
+
+@font-face {
+    font-family: "Arista Pro SemiBold";
+    /*src: url('static/fonts/arista-pro-semi-bold.ttf');*/
+    font-weight: normal;
+    font-style: normal;
+}
+* {
+    font-family: "Arista Pro SemiBold", sans-serif;
+}
