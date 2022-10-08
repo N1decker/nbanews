@@ -10,8 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 @Getter
@@ -33,7 +36,9 @@ public class News {
 //    @NotNull
     private String sourceLogo;
 //    @NotNull
-    private LocalDateTime dateTime;
+    private LocalDate newsDate = LocalDate.now();
+
+    private LocalTime newsTime = LocalTime.now().truncatedTo(TimeUnit.MINUTES.toChronoUnit());
 //    @NotBlank
     private String editor;
 

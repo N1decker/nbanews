@@ -9,8 +9,9 @@
             <tbody>
             <tr th:each="news1 : ${news}">
                 <div class="card-container">
+                    <div hidden th:text="${news1.id}"></div>
                     <div class="card rounded">
-                        <img th:src=" ${news1.image} ? *{'data:image/jpeg;base64,'+{news1.image}} : ''"
+                        <img th:src=" ${news1.image} ? *{'data:image/jpeg;base64,'+news1.image} : ''"
                              class="card-img-top rounded">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${news1.title}"></h5>
@@ -23,18 +24,26 @@
                                     <button class="btn dislike" type="button">
                                         <img th:src="0==-1 ? '/images/icons/hand-thumbs-down-fill.svg' : '/images/icons/hand-thumbs-down.svg'">
                                     </button>
-                                    <button class="btn chat" type="button" data-bs-toggle="collapse"
+                                    <button th:id="${news1.id}" class="btn chat" type="button"
+                                            data-bs-toggle="collapse"
                                             th:attr="data-bs-target=${'#collapseExample' + news1.id}"
                                             aria-expanded="false" aria-controls="collapseExample">
-                                        <img src="/images/icons/chat-left.png">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
+                                             fill="currentColor" class="bi bi-chat-left" viewBox="0 0 16 16">
+                                            <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                        </svg>
                                     </button>
                                     <a class="source-logo"
                                        th:href="${news1.source}">
-                                        <img th:src=" ${news1.sourceLogo} ? *{'data:image/jpeg;base64,'+{news1.sourceLogo}} : ''">
+                                        <img th:src=" ${news1.sourceLogo} ? *{'data:image/jpeg;base64,'+news1.sourceLogo} : ''">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+                                            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+                                        </svg>
                                     </a>
                                 </div>
                                 <div class="editor-info">
-                                    <p class="text-center">14:28</p>
+                                    <p class="text-center" th:text="${news1.newsTime}"></p>
                                     <p class="text-center">Nickname</p>
                                 </div>
                             </div>
@@ -42,8 +51,21 @@
                     </div>
                     <div class="collapse" th:id="${'collapseExample'+ news1.id}">
                         <div class="card card-footer">
-                            Some placeholder content for the collapse component. This panel is hidden by default but
-                            revealed when the user activates the relevant trigger.
+                            <ul class="list-group" th:id="${'message-list' + news1.id}"></ul>
+                            <br/>
+                            <div class="input-group">
+                                <input th:id="${'send-message' + news1.id}" type="text" class="form-control border-end-0 border rounded">
+                                <span class="input-group-append">
+                                <button th:id="${news1.id}"
+                                        class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5 send-msg-btn"
+                                        type="button" style="z-index: 0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-send-fill" viewBox="0 0 16 16">
+                                        <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+                                    </svg>
+                                </button>
+                            </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,9 +73,9 @@
             </tbody>
         </table>
     </div>
+
     <div>
         <div>
-
             <div class="row">
                 <div class="mr-1">
                     <div class="input-group">
