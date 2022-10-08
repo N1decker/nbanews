@@ -3,5 +3,88 @@
 <head th:include="/fragments/header :: header"></head>
 <body>
 <div th:include="/fragments/navbar :: navbar"></div>
+<div class="container">
+    <div class="horizontal-center">
+        <table id="news-table">
+            <tbody>
+            <tr th:each="news1 : ${news}">
+                <div class="card-container">
+                    <div class="card rounded">
+                        <img th:src=" ${news1.image} ? *{'data:image/jpeg;base64,'+{news1.image}} : ''"
+                             class="card-img-top rounded">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${news1.title}"></h5>
+                            <div>
+                                <div>
+                                    <!-- Здесь будет переменная, проверяющая какую оценку поставил пользователь: 1 - лайк, -1-дизлайк, 0-нет оценки -->
+                                    <button class="btn like" type="button">
+                                        <img th:src="1==1 ? '/images/icons/hand-thumbs-up-fill.svg' : '/images/icons/hand-thumbs-up.svg'">
+                                    </button>
+                                    <button class="btn dislike" type="button">
+                                        <img th:src="0==-1 ? '/images/icons/hand-thumbs-down-fill.svg' : '/images/icons/hand-thumbs-down.svg'">
+                                    </button>
+                                    <button class="btn chat" type="button" data-bs-toggle="collapse"
+                                            th:attr="data-bs-target=${'#collapseExample' + news1.id}"
+                                            aria-expanded="false" aria-controls="collapseExample">
+                                        <img src="/images/icons/chat-left.png">
+                                    </button>
+                                    <a class="source-logo"
+                                       th:href="${news1.source}">
+                                        <img th:src=" ${news1.sourceLogo} ? *{'data:image/jpeg;base64,'+{news1.sourceLogo}} : ''">
+                                    </a>
+                                </div>
+                                <div class="editor-info">
+                                    <p class="text-center">14:28</p>
+                                    <p class="text-center">Nickname</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse" th:id="${'collapseExample'+ news1.id}">
+                        <div class="card card-footer">
+                            Some placeholder content for the collapse component. This panel is hidden by default but
+                            revealed when the user activates the relevant trigger.
+                        </div>
+                    </div>
+                </div>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <div>
+
+            <div class="row">
+                <div class="mr-1">
+                    <div class="input-group">
+                        <input class="form-control border-end-0 border rounded" type="search" placeholder="Search"
+                               id="news-search-input">
+                        <span class="input-group-append">
+                    <button class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5"
+                            type="button" style="z-index: 0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                        </svg>
+                    </button>
+                </span>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" class="btn" style="background: #5ce1e6" id="addNewsBtn" data-bs-toggle="modal"
+                            data-bs-target="#addNews"
+                            aria-expanded="false" aria-controls="collapseExample">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="70" height="16" fill="currentColor"
+                             class="bi bi-plus"
+                             viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div th:include="/fragments/addNews :: addNews"></div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

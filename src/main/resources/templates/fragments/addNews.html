@@ -1,0 +1,30 @@
+<div th:fragment="addNews">
+    <div class="modal fade" id="addNews" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="text-center split right modal-body">
+                    <form method="post" action="/" enctype="multipart/form-data">
+                        <div>
+                            <textarea class="form-control mb-3" name="title" id="title"
+                                      placeholder="Title"></textarea>
+                        </div>
+                        <div class="custom-file mb-3">
+                            <input type="file" name="image" class="custom-file-input" id="image">
+                            <label class="custom-file-label" for="image">Select image</label>
+                        </div>
+                        <div class="mb-3">
+                            <input type="url" class="form-control" name="source" id="source" placeholder="Source url">
+                        </div>
+                        <div class="custom-file mb-3">
+                            <input type="file" name="sourceLogo" class="custom-file-input"
+                            id="sourceLogo" >
+                            <label class="custom-file-label" for="sourceLogo">Select source
+                                logo</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

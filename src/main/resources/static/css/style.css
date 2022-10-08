@@ -4,10 +4,74 @@
 
 @font-face {
     font-family: "Arista Pro SemiBold";
-    /*src: url('static/fonts/arista-pro-semi-bold.ttf');*/
     font-weight: normal;
     font-style: normal;
 }
-* {
+
+.editor-info * {
+    margin-bottom: unset
+}
+
+.horizontal-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.like:hover, .dislike:hover, .chat:hover {
+    cursor: pointer;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #000000;
+    margin-top: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 0;
+}
+
+.navbar {
+    background: white;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
     font-family: "Arista Pro SemiBold", sans-serif;
+}
+
+.source-logo {
+    margin-left: 400px;
+}
+
+.source-logo img {
+    width: 100px;
+}
+
+.like, .dislike, .chat {
+    background: white;
+    justify-content: center;
+    width: 20px;
+    padding: 0;
+    border: 0;
+}
+
+.like *, .dislike *, .chat * {
+    width: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 90px;
+    margin-right: 260px;
+}
+
+.card {
+    width: 40rem;
+}
+
+.card-container {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
 }
