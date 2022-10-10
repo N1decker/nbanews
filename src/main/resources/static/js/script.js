@@ -1,7 +1,7 @@
 $('.send-msg-btn').on('click', function () {
     let id = $(this).attr('id');
     let url = "/news/" + id + "/comments";
-    let message = $('#send-message'+id).val();
+    let message = $('#send-message' + id).val();
     $.ajax({
         url: url,
         type: "POST",
@@ -10,24 +10,39 @@ $('.send-msg-btn').on('click', function () {
             id
         }
     });
-    $('#send-message'+id).val("");
+    $('#send-message' + id).val("");
     $("#message-list" + id).append("<li class='list-group-item mb-1'>" + message + "</li>");
 });
 
-let loadChat = $('.chat').on('click', function () {
-    let id = $(this).attr('id');
-    let url = "/news/" + id + "/comments";
-    $.ajax({
-        url: url,
-        type: 'GET',
-        dataType: 'json',
-        contentType: "application/Json; Charset= Utf-8",
-        success: function (data) {
-            let list = "";
-            $.each(data, function (index, item) {
-                list += "<li class='list-group-item mb-1'>" + item.comment + "</li>";
-            })
-            $("#message-list" + id).html(list);
-        }
-    });
+$('.chat').on('click', function () {
+    if (this.classList.contains("collapsed")) {
+        this.classList.remove("collapsed")
+    } else {
+        let id = $(this).attr('id');
+        let url = "/news/" + id + "/comments";
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'json',
+            contentType: "application/Json; Charset= Utf-8",
+            success: function (data) {
+                let list = "";
+                $.each(data, function (index, item) {
+                    list += "<li class='list-group-item mb-1'>" + item.comment + "</li>";
+                })
+                $("#message-list" + id).html(list);
+            }
+        });
+        this.classList.add("collapsed");
+    }
 });
+
+function getFileName(inputName) {
+    let filename = $('#' + inputName).val();
+    const lastIndex = filename.lastIndexOf("\\");
+    if (lastIndex >= 0) {
+        filename = filename.substring(lastIndex + 1);
+    }
+    $('#' + inputName + '-label').html(filename);
+};
+
