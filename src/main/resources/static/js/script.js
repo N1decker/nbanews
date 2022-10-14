@@ -46,3 +46,32 @@ function getFileName(inputName) {
     $('#' + inputName + '-label').html(filename);
 };
 
+$("#logout-btn").on('click', function(e){
+    e.preventDefault();
+    $.ajax({
+        url : "/logout",
+        method : "POST",
+        success : function() {
+            window.location.href = "/";
+        }
+    });
+});
+
+$("#signIn-btn").on("click", function () {
+    $.ajax({
+        url: "/login",
+        method: "POST",
+        data: $('#loginForm').serialize(),
+        success : function() {
+            window.location.href = "/news";
+        }
+    }).error(function (res, status){
+        debugger;
+        console.log(res);
+        $('#wrongPass').show()
+    });
+})
+
+function signIn(email, password) {
+    
+}

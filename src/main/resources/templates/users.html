@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="/fragments/header :: header"></head>
+<body>
+<div th:include="/fragments/navbar :: navbar"></div>
+<div class="container" style="margin-top: 140px">
+    <table id="users" class="horizontal-center table">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nickname</th>
+            <th scope="col">Email</th>
+            <th scope="col">Enabled</th>
+            <th scope="col">Roles</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}" th:id="${'user' + user.id}">
+            <td><span th:text="${user.id}">Id</span></td>
+            <td><span th:text="${user.nickname}">Nickname</span></td>
+            <td><span th:text="${user.email}">Email</span></td>
+            <td>
+                <input class="horizontal-center" type="checkbox" value="" id="enabled"
+                       th:checked="${user.enabled}">
+            </td>
+            <td>
+                <div class="row">
+                    <input class="horizontal-center" type="checkbox" value="" id="isUser"
+                           th:checked="${user.isUser}">
+                    <label class="form-check-label" for="isUser">USER</label>
+                </div>
+                <div class="row">
+                    <input class="horizontal-center" type="checkbox" value="" id="isAdmin"
+                           th:checked="${user.isAdmin}">
+                    <label class="form-check-label" for="isAdmin">ADMIN</label>
+                </div>
+                <div class="row">
+                    <input class="horizontal-center" type="checkbox" value="" id="isEditor"
+                           th:checked="${user.isEditor}">
+                    <label class="form-check-label" for="isEditor">Editor</label>
+                </div>
+            </td>
+            <td th:if="${#request.userPrincipal.getName() != user.email}"><span>
+                <button class="btn btn-danger" id="delete"> Delete</button>
+            </span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

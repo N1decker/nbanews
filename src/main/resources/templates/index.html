@@ -2,119 +2,53 @@
 <html lang="en">
 <head th:include="/fragments/header :: header"></head>
 <body>
-<div th:include="/fragments/navbar :: navbar"></div>
-<div class="container">
-    <div class="horizontal-center">
-        <tr th:each="news1 : ${news}">
-            <div class="card-container">
-                <div hidden th:text="${news1.id}"></div>
-                <div class="card rounded">
-                    <img th:src=" ${news1.image} ? *{'data:image/jpeg;base64,'+news1.image} : ''"
-                         class="card-img-top rounded">
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${news1.title}"></h5>
-                        <div>
-                            <div>
-                                <!-- Здесь будет переменная, проверяющая какую оценку поставил пользователь: 1 - лайк, -1-дизлайк, 0-нет оценки -->
-                                <button class="btn like" type="button">
-                                    <img th:src="1==1 ? '/images/icons/hand-thumbs-up-fill.svg' : '/images/icons/hand-thumbs-up.svg'">
-                                </button>
-                                <button class="btn dislike" type="button">
-                                    <img th:src="0==-1 ? '/images/icons/hand-thumbs-down-fill.svg' : '/images/icons/hand-thumbs-down.svg'">
-                                </button>
-                                <button th:id="${news1.id}" class="btn chat" type="button"
-                                        data-bs-toggle="collapse"
-                                        th:attr="data-bs-target=${'#collapseExample' + news1.id}"
-                                        aria-expanded="false" aria-controls="collapseExample">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
-                                         fill="currentColor" class="bi bi-chat-left" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                    </svg>
-                                </button>
-                                <a class="source-logo"
-                                   th:href="${news1.source}">
-                                    <img th:src=" ${news1.sourceLogo} ? *{'data:image/jpeg;base64,'+news1.sourceLogo} : ''">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                                         fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                              d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
-                                        <path fill-rule="evenodd"
-                                              d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                            <div class="editor-info">
-                                <p class="text-center" th:text="${news1.newsTime}"></p>
-                                <p class="text-center">Nickname</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="collapse" th:id="${'collapseExample'+ news1.id}">
-                    <div class="card card-footer">
-                        <ul class="list-group" th:id="${'message-list' + news1.id}"></ul>
-                        <br/>
-                        <div class="input-group">
-                            <input th:id="${'send-message' + news1.id}" type="text"
-                                   class="form-control border-end-0 border rounded">
-                            <span class="input-group-append">
-                                <button th:id="${news1.id}"
-                                        class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5 send-msg-btn"
-                                        type="button" style="z-index: 0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-send-fill" viewBox="0 0 16 16">
-                                        <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
-                                    </svg>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </tr>
-    </div>
-
-    <div>
+<!--<nav class="navbar" style="z-index: unset">-->
+    <div class="container my-0">
+        <a href="/" class="navbar-brand">
+            <img src="/images/logo.png" height="60" alt="NbaNews">
+        </a>
         <div>
-            <div class="row">
-                <div class="mr-1">
-                    <div class="input-group">
-                        <input class="form-control border-end-0 border rounded" type="search" placeholder="Search"
-                               id="news-search-input">
-                        <span class="input-group-append">
-                    <button class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5"
-                            type="button" style="z-index: 0">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-search" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                        </svg>
-                    </button>
-                </span>
-                    </div>
-                </div>
-                <div>
-                    <button type="button" class="btn" style="background: #5ce1e6" id="addNewsBtn" data-bs-toggle="modal"
-                            data-bs-target="#addNews"
-                            aria-expanded="false" aria-controls="collapseExample">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="70" height="16" fill="currentColor"
-                             class="bi bi-plus"
-                             viewBox="0 0 16 16">
-                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div th:include="/fragments/addNews :: addNews"></div>
+            <form id="loginForm" class="form-signIn form-inline" th:action="@{/login}" method="post">
+                <input type="text" class="form-control mr-1" placeholder="Username" name="username" id="username">
+                <input type="password" class="form-control mr-1" placeholder="Password" name="password" id="password">
+                <!--        <button  class="btn btn-primary btn-block" type="submit">Sign in</button>-->
+                <button id="signIn-btn" class="btn btn-success" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                         class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                        <path fill-rule="evenodd"
+                              d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                    </svg>
+                </button>
+            </form>
         </div>
     </div>
-</div>
-<div>
-    <button type="button" class="btn btn-dark btn-floating btn-lg" id="btn-back-to-top">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-             class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16">
-            <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
-        </svg>
-    </button>
+<!--</nav>-->
+<div class="container">
+    <div class="col">
+        <div>
+            <a class="btn btn-primary mr-1" data-bs-toggle="collapse" href="#collapseExample" role="button"
+               aria-expanded="false"
+               aria-controls="collapseExample">
+                Sign up
+            </a>
+            <a class="btn btn-primary mr-1" role="button" onclick="signIn('admin@gmail.com','admin')">
+                Login as Admin
+            </a>
+            <a class="btn btn-primary mr-1" role="button">
+                Login as User
+            </a>
+        </div>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                Some placeholder content for the collapse component. This panel is hidden by default but revealed when
+                the
+                user activates the relevant trigger.
+            </div>
+        </div>
+    </div>
+
 </div>
 </body>
 </html>
