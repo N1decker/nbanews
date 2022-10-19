@@ -1,4 +1,4 @@
-<div th:fragment="navbar">
+<div th:fragment="navbar" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <nav class="navbar">
         <a href="/" class="navbar-brand">
             <img src="/images/logo.png" height="60" alt="NbaNews">
@@ -7,10 +7,10 @@
             <li class="nav-item">
                 <a class="nav-link" href="/about">About</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item"  id="news">
                 <a class="nav-link" href="/news">News</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                 <a class="nav-link" href="/users">Users</a>
             </li>
             <li class="nav-item">

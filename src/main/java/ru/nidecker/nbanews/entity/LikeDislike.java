@@ -1,5 +1,8 @@
 package ru.nidecker.nbanews.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cascade;
@@ -13,29 +16,34 @@ import java.util.Objects;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class News_User_Relationship {
+public class LikeDislike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
+    @JsonIgnoreProperties(value = {"title", "image", "source", "sourceLogo"})
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private News news;
 
-//    @ManyToOne
-//    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-//    private User user;
+    @ManyToOne
+    @JsonIgnoreProperties(value = {"password", "roles"})
+    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
+    private User user;
 
-    private String comment;
+    private int likeType = 0;
 
-//    private int likeType;
+    public LikeDislike(News news, User user) {
+        this.news = news;
+        this.user = user;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        News_User_Relationship that = (News_User_Relationship) o;
+        LikeDislike that = (LikeDislike) o;
         return id != null && Objects.equals(id, that.id);
     }
 

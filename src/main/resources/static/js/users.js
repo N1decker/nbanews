@@ -1,8 +1,7 @@
 $("#isAdmin, #isUser, #isEditor, #enabled").on("click", function () {
-    const btn = $(this);
-    if (btn.is('[checked]')) {
-        btn.removeAttr('checked')
+    if ($(this).is('[checked]')) {
+        $(this).removeAttr('checked')
     } else {
-        btn.attr('checked', 'checked')
+        $(this).attr('checked', 'checked')
     }
 });

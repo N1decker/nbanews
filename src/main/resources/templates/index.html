@@ -2,31 +2,11 @@
 <html lang="en">
 <head th:include="/fragments/header :: header"></head>
 <body>
-<!--<nav class="navbar" style="z-index: unset">-->
-    <div class="container my-0">
+<div>
+    <nav class="navbar my-0">
         <a href="/" class="navbar-brand">
             <img src="/images/logo.png" height="60" alt="NbaNews">
         </a>
-        <div>
-            <form id="loginForm" class="form-signIn form-inline" th:action="@{/login}" method="post">
-                <input type="text" class="form-control mr-1" placeholder="Username" name="username" id="username">
-                <input type="password" class="form-control mr-1" placeholder="Password" name="password" id="password">
-                <!--        <button  class="btn btn-primary btn-block" type="submit">Sign in</button>-->
-                <button id="signIn-btn" class="btn btn-success" type="submit">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
-                         class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                              d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
-                        <path fill-rule="evenodd"
-                              d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                    </svg>
-                </button>
-            </form>
-        </div>
-    </div>
-<!--</nav>-->
-<div class="container">
-    <div class="col">
         <div>
             <a class="btn btn-primary mr-1" data-bs-toggle="collapse" href="#collapseExample" role="button"
                aria-expanded="false"
@@ -36,19 +16,47 @@
             <a class="btn btn-primary mr-1" role="button" onclick="signIn('admin@gmail.com','admin')">
                 Login as Admin
             </a>
-            <a class="btn btn-primary mr-1" role="button">
+            <a class="btn btn-primary mr-1" role="button" onclick="signIn('user@yandex.com', 'user')">
                 Login as User
             </a>
         </div>
-        <div class="collapse" id="collapseExample">
-            <div class="card card-body">
-                Some placeholder content for the collapse component. This panel is hidden by default but revealed when
-                the
-                user activates the relevant trigger.
+        <div>
+            <form id="loginForm" class="form-signIn form-inline" th:action="@{/login}" method="post">
+                <input type="text" class="form-control mr-1" placeholder="Email" name="username" id="username" required>
+                <input type="password" class="form-control mr-1" placeholder="Password" name="password" id="password" required>
+                <button id="signIn-btn" class="btn btn-success" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                        <path fill-rule="evenodd"
+                              d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </nav>
+    <hr/>
+</div>
+
+<div class="container">
+    <div class="col">
+        <div class="row">
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    Some placeholder content for the collapse component. This panel is hidden by default but revealed
+                    when
+                    the
+                    user activates the relevant trigger.
+                </div>
             </div>
         </div>
+        <div class="row">
+            <h3>
+                Здесь будет описание пет-проекта и использованные технологии
+            </h3>
+        </div>
     </div>
-
 </div>
 </body>
 </html>

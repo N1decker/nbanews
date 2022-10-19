@@ -46,32 +46,64 @@ function getFileName(inputName) {
     $('#' + inputName + '-label').html(filename);
 };
 
-$("#logout-btn").on('click', function(e){
+$("#logout-btn").on('click', function (e) {
     e.preventDefault();
     $.ajax({
-        url : "/logout",
-        method : "POST",
-        success : function() {
+        url: "/logout",
+        method: "POST",
+        success: function () {
             window.location.href = "/";
         }
     });
 });
 
 $("#signIn-btn").on("click", function () {
-    $.ajax({
-        url: "/login",
-        method: "POST",
-        data: $('#loginForm').serialize(),
-        success : function() {
-            window.location.href = "/news";
-        }
-    }).error(function (res, status){
-        debugger;
-        console.log(res);
-        $('#wrongPass').show()
-    });
+    let email = $('#username').val();
+    let password = $('#password').val();
+    signIn(email, password);
 })
 
 function signIn(email, password) {
-    
+    $.ajax({
+        url: "/login",
+        method: "POST",
+        data: {
+            'username': email,
+            'password': password
+        },
+        success: function () {
+            window.location.href = "/news";
+        }
+    });
 }
+
+$('.like, .dislike').on('click', function () {
+    let clickedBtn = $(this).children();
+    let oppositeBtn = clickedBtn.hasClass('bi-hand-thumbs-up-fill') ? $(this).parent().find('.dislike').children() : $(this).parent().find('.like').children();
+    let likeType = $(this).hasClass('like') ? 1 : -1;
+    if (clickedBtn.attr('style') === 'fill: black;') {
+        clickedBtn.css('fill', 'darkgrey');
+        $.ajax({
+            url: "/changeLike",
+            method: "POST",
+            data: {
+                'newsId': $(this).parent().attr('id'),
+                'likeType': 0
+            }
+        });
+    } else if (clickedBtn.attr('style') === 'fill: darkgrey;') {
+        $.ajax({
+            url: "/changeLike",
+            method: "POST",
+            data: {
+                'newsId': $(this).parent().attr('id'),
+                'likeType': likeType
+            }
+        });
+        if (oppositeBtn.attr('style') === 'fill: black;') {
+            oppositeBtn.css('fill', 'darkgrey');
+        }
+        clickedBtn.css('fill', 'black');
+    }
+
+})
