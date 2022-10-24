@@ -1,4 +1,4 @@
-package ru.nidecker.nbanews.controller;
+package ru.nidecker.nbanews.config.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -18,7 +18,6 @@ import ru.nidecker.nbanews.service.NewsService;
 
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Controller
 @RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -36,18 +35,12 @@ public class MainController {
         return "index";
     }
 
-//
-//    @GetMapping("about")
-//    public String about() {
-//        return "redirect:/";
-//    }
-
     @GetMapping("/news")
     public String news(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("news", newsRepository.findAllByOrderByIdDesc());
         Map<String, LikeDislike> likes = likeDislikeRepository.findAllByUserId(user.getId())
                 .stream()
-                .collect(Collectors.toMap(likeDislike -> (likeDislike.getNews().getId()+""+likeDislike.getUser().getEmail()), likeDislike -> likeDislike));
+                .collect(Collectors.toMap(likeDislike -> (likeDislike.getNews().getId() + "" + likeDislike.getUser().getEmail()), likeDislike -> likeDislike));
         model.addAttribute("likesDislikes", likes);
         return "news";
     }
@@ -56,8 +49,9 @@ public class MainController {
     public String save(@RequestParam("title") String title,
                        @RequestParam("image") MultipartFile image,
                        @RequestParam("source") String source,
-                       @RequestParam("sourceLogo") MultipartFile sourceLogo) {
-        newsService.save(title, image, source, sourceLogo);
+                       @RequestParam("sourceLogo") MultipartFile sourceLogo,
+                       @AuthenticationPrincipal User user) {
+        newsService.save(title, image, source, sourceLogo, user);
         return "redirect:/";
     }
 }

@@ -4,10 +4,10 @@
 <body>
 <div th:include="/fragments/navbar :: navbar"></div>
 <div class="container">
-    <div class="horizontal-center">
+    <div class="horizontal-center" style="margin-right: unset">
         <tr th:each="news1 : ${news}">
             <div class="card-container">
-<!--                <div hidden th:text="${news1.id}"></div>-->
+                <!--                <div hidden th:text="${news1.id}"></div>-->
                 <div class="card rounded">
                     <img th:src=" ${news1.image} ? *{'data:image/jpeg;base64,'+news1.image} : ''"
                          class="card-img-top rounded">
@@ -53,7 +53,7 @@
                         </div>
                         <div class="editor-info">
                             <p class="text-center" th:text="${news1.newsTime}"></p>
-                            <p class="text-center">Nickname</p>
+                            <p class="text-center" th:text="${news1.editor.nickname}"></p>
                         </div>
                     </div>
                 </div>
@@ -81,14 +81,15 @@
     </div>
     </tr>
 
-    <div>
+    <aside style="float: left; width: 20%">
         <div>
-            <div class="row">
-                <div class="mr-1">
-                    <div class="input-group">
-                        <input class="form-control border-end-0 border rounded" type="search" placeholder="Search"
-                               id="news-search-input">
-                        <span class="input-group-append">
+            <div>
+                <div class="row">
+                    <div class="mr-1">
+                        <div class="input-group">
+                            <input class="form-control border-end-0 border rounded" type="search" placeholder="Search"
+                                   id="news-search-input">
+                            <span class="input-group-append">
                     <button class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5"
                             type="button" style="z-index: 0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -97,24 +98,27 @@
                         </svg>
                     </button>
                 </span>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" class="btn" style="background: #5ce1e6" id="addNewsBtn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#addNews"
+                                aria-expanded="false" aria-controls="collapseExample">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="16" fill="currentColor"
+                                 class="bi bi-plus"
+                                 viewBox="0 0 16 16">
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
-                <div>
-                    <button type="button" class="btn" style="background: #5ce1e6" id="addNewsBtn" data-bs-toggle="modal"
-                            data-bs-target="#addNews"
-                            aria-expanded="false" aria-controls="collapseExample">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="70" height="16" fill="currentColor"
-                             class="bi bi-plus"
-                             viewBox="0 0 16 16">
-                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
-                        </svg>
-                    </button>
-                </div>
+                <div th:include="/fragments/addNews :: addNews"></div>
             </div>
-            <div th:include="/fragments/addNews :: addNews"></div>
         </div>
-    </div>
+    </aside>
 </div>
+
 <div>
     <button type="button" class="btn btn-dark btn-floating btn-lg" id="btn-back-to-top">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -124,4 +128,5 @@
     </button>
 </div>
 </body>
+<head th:include="/fragments/header :: header"></head>
 </html>

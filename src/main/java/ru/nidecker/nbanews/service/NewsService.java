@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import ru.nidecker.nbanews.entity.News;
+import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.repository.NewsRepository;
 
 import java.util.Base64;
@@ -18,7 +19,7 @@ public class NewsService {
         this.newsRepository = newsRepository;
     }
 
-    public News save(String title, MultipartFile image, String source, MultipartFile sourceLogo) {
+    public News save(String title, MultipartFile image, String source, MultipartFile sourceLogo, User user) {
         News news = new News();
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename()));
         try {
@@ -26,6 +27,7 @@ public class NewsService {
             news.setSourceLogo(Base64.getEncoder().encodeToString(sourceLogo.getBytes()));
         } catch (Exception ignored) {}
 
+        news.setEditor(user);
         news.setTitle(title);
         news.setSource(source);
         return newsRepository.save(news);

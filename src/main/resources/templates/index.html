@@ -3,7 +3,7 @@
 <head th:include="/fragments/header :: header"></head>
 <body>
 <div>
-    <nav class="navbar my-0">
+    <div class="navbar my-0">
         <a href="/" class="navbar-brand">
             <img src="/images/logo.png" height="60" alt="NbaNews">
         </a>
@@ -21,7 +21,7 @@
             </a>
         </div>
         <div>
-            <form id="loginForm" class="form-signIn form-inline" th:action="@{/login}" method="post">
+            <form id="loginForm" class="form-signIn form-inline">
                 <input type="text" class="form-control mr-1" placeholder="Email" name="username" id="username" required>
                 <input type="password" class="form-control mr-1" placeholder="Password" name="password" id="password" required>
                 <button id="signIn-btn" class="btn btn-success" type="button">
@@ -35,8 +35,7 @@
                 </button>
             </form>
         </div>
-    </nav>
-    <hr/>
+    </div>
 </div>
 
 <div class="container">

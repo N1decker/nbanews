@@ -1,8 +1,10 @@
 package ru.nidecker.nbanews.entity;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,7 +25,7 @@ import static org.hibernate.annotations.CascadeType.ALL;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
 
@@ -43,10 +45,8 @@ public class User implements UserDetails {
     @NotBlank
     private String password;
 
-    @JsonIgnore
-    private Date registered = new Date();
-
     private boolean enabled;
+    private boolean locked;
 
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -54,6 +54,16 @@ public class User implements UserDetails {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Cascade(ALL)
     private Set<Role> roles;
+
+    public User(String nickname,
+                String email,
+                String password,
+                Set<Role> roles) {
+        this.nickname = nickname;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -86,13 +96,18 @@ public class User implements UserDetails {
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        return roles;
     }
 
     @Override
     @JsonIgnore
     public String getUsername() {
         return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     @Override
@@ -104,7 +119,7 @@ public class User implements UserDetails {
     @Override
     @JsonIgnore
     public boolean isAccountNonLocked() {
-        return true;
+        return !locked;
     }
 
     @Override

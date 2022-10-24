@@ -2,11 +2,11 @@
     color: #5ce1e6;
 }
 
-@font-face {
-    font-family: "Arista Pro SemiBold";
-    font-weight: normal;
-    font-style: normal;
-}
+/*@font-face {*/
+/*    font-family: "Arista Pro SemiBold";*/
+/*    font-weight: normal;*/
+/*    font-style: normal;*/
+/*}*/
 
 .editor-info * {
     margin-bottom: unset
@@ -32,7 +32,7 @@ hr {
     padding: 0;
 }
 
-.navbar {
+nav.navbar {
     background: white;
     position: fixed;
     width: 100%;
@@ -64,7 +64,10 @@ hr {
     display: flex;
     justify-content: space-between;
     margin-top: 90px;
-    margin-right: 260px;
+    padding: unset;
+    /*margin-right: 100px;*/
+    /*margin-left: 25%;*/
+    /*margin-right: auto;*/
 }
 
 .card {

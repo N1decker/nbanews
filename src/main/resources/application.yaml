@@ -14,3 +14,15 @@ spring:
         format_sql: true
     generate-ddl: true
     open-in-view: false
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: egor.ershofff@gmail.com
+    password: jcrnokhpzkkrcuwm
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
