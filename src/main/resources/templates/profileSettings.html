@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="/fragments/header :: header"></head>
+<body>
+<div th:include="/fragments/navbar :: navbar"></div>
+
+<div class="container rounded" id="profileSettings">
+    <div class="row" style="justify-content: center">
+        <div>
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img class="rounded-circle mt-5" width="150px"
+                     src="/images/icons/person-circle.svg">
+            </div>
+        </div>
+        <div>
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Settings</h4>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <label class="labels">Nickname</label>
+                        <div class="input-group">
+                            <input id="profile-nickname-input" type="text" class="form-control" th:value="${user.nickname}">
+                            <span class="input-group-append" id="change-nickname-btn" style="display: none">
+                                <button class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5"
+                                        type="button" style="z-index: 0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-check2" viewBox="0 0 16 16">
+                                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                                    </svg>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="labels">Email</label>
+                        <div class="input-group">
+                            <input id="profile-email-input" type="text" class="form-control" th:value="${user.email}">
+                            <span class="input-group-append" id="change-email-btn" style="display: none">
+                                <button class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5"
+                                        type="button" style="z-index: 0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-check2" viewBox="0 0 16 16">
+                                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                                    </svg>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label class="labels">Country</label>
+                        <input type="text" class="form-control" placeholder="country" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="labels">State/Region</label>
+                        <input type="text" class="form-control" value="" placeholder="state">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

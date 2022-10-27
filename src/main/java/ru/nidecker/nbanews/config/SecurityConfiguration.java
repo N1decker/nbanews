@@ -34,8 +34,8 @@ public class SecurityConfiguration {
 //                .antMatchers("/api/auth/**").permitAll()
 //                .antMatchers("/").permitAll()
 //                .anyRequest().authenticated()
+                .antMatchers("/users/**", "/news/**").authenticated()
                 .anyRequest().permitAll()
-//                .antMatchers("/news/**").authenticated()
                 .and()
                 .formLogin()
                 .loginProcessingUrl("/login").loginPage("/").failureHandler(authenticationFailureHandler).permitAll()
@@ -44,11 +44,6 @@ public class SecurityConfiguration {
 
         return http.build();
     }
-
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        return (web -> web.ignoring().antMatchers("/static/**"));
-//    }
 
     @Bean
     public AuthenticationManager authenticationManager(

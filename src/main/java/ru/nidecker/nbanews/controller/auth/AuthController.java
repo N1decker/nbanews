@@ -1,4 +1,4 @@
-package ru.nidecker.nbanews.config.controller.auth;
+package ru.nidecker.nbanews.controller.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

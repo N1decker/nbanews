@@ -42,16 +42,16 @@ function signIn(email, password) {
     });
 }
 
-let warningNotify = function (text) {
+function warningNotify(text) {
     toastr.options = {
         positionClass: 'toast-bottom-right'
     }
     toastr['warning'](text)
 }
 
-let successNotify = function (text) {
+function successNotify(text) {
     toastr.options = {
         positionClass: 'toast-bottom-right'
     }
-    toastr['warning'](text)
+    toastr['success'](text)
 }

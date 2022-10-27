@@ -1,4 +1,4 @@
-package ru.nidecker.nbanews.config.controller;
+package ru.nidecker.nbanews.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

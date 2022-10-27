@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.nidecker.nbanews.config.controller.registration.token.ConfirmationToken;
-import ru.nidecker.nbanews.config.controller.registration.token.ConfirmationTokenService;
+import ru.nidecker.nbanews.controller.profile.registration.token.ConfirmationToken;
+import ru.nidecker.nbanews.controller.profile.registration.token.ConfirmationTokenService;
 import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.repository.UserRepository;
 

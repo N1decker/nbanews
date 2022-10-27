@@ -1,4 +1,4 @@
-package ru.nidecker.nbanews.config.controller;
+package ru.nidecker.nbanews.controller;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;

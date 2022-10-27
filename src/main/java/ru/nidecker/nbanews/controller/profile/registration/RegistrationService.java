@@ -1,10 +1,10 @@
-package ru.nidecker.nbanews.config.controller.registration;
+package ru.nidecker.nbanews.controller.profile.registration;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.nidecker.nbanews.config.controller.registration.token.ConfirmationToken;
-import ru.nidecker.nbanews.config.controller.registration.token.ConfirmationTokenService;
+import ru.nidecker.nbanews.controller.profile.registration.token.ConfirmationToken;
+import ru.nidecker.nbanews.controller.profile.registration.token.ConfirmationTokenService;
 import ru.nidecker.nbanews.email.EmailSender;
 import ru.nidecker.nbanews.entity.Role;
 import ru.nidecker.nbanews.entity.User;

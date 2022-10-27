@@ -1,3 +1,14 @@
+function changeLike(newsId, likeType) {
+    $.ajax({
+        url: "/api/news/changeLike",
+        method: "POST",
+        data: {
+            'newsId': newsId,
+            'likeType': likeType
+        }
+    });
+}
+
 $('.send-msg-btn').on('click', function () {
     let id = $(this).attr('id');
     let url = "/news/" + id + "/comments";
@@ -5,9 +16,9 @@ $('.send-msg-btn').on('click', function () {
 
     if (message) {
         $.ajax({
-            'url': url,
-            'type': "POST",
-            'data': {
+            url: url,
+            type: "POST",
+            data: {
                 message, id
             }
         });
@@ -19,33 +30,30 @@ $('.send-msg-btn').on('click', function () {
     }
 });
 
-$('.chat').on('click', function () {
-
-    if (this.classList.contains("collapsed")) {
-        this.classList.remove("collapsed")
-    } else {
-        let id = $(this).attr('id');
-        let url = "/news/" + id + "/comments";
-
-        $.ajax({
-            'url': url,
-            'type': 'GET',
-            'dataType': 'json',
-            'contentType': "application/Json; Charset= Utf-8",
-            'success': function (data) {
-                let list = "";
-                $.each(data, function (index, item) {
-                    list += "<li class='list-group-item mb-1'>" + item.comment + "</li>";
-                })
-                $("#message-list" + id).html(list);
-            }
-        });
-        this.classList.add("collapsed");
-    }
-});
+    $('.chat').on('click', function () {
+        if (this.classList.contains("collapsed")) {
+            this.classList.remove("collapsed")
+        } else {
+            let id = $(this).attr('id');
+            let url = "/news/" + id + "/comments";
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/Json; Charset= Utf-8",
+                success: function (data) {
+                    let list = "";
+                    $.each(data, function (index, item) {
+                        list += "<li class='list-group-item mb-1'>" + item.comment + "</li>";
+                    })
+                    $("#message-list" + id).html(list);
+                }
+            });
+            this.classList.add("collapsed");
+        }
+    });
 
 $('.like, .dislike').on('click', function () {
-
     let clickedBtn = $(this).children();
     let oppositeBtn = clickedBtn.hasClass('bi-hand-thumbs-up-fill') ? $(this).parent().find('.dislike').children() : $(this).parent().find('.like').children();
     let likeType = $(this).hasClass('like') ? 1 : -1;
@@ -62,15 +70,4 @@ $('.like, .dislike').on('click', function () {
         }
         clickedBtn.css('fill', 'black');
     }
-})
-
-let changeLike = function (newsId, likeType) {
-    $.ajax({
-        url: "/api/news/changeLike",
-        method: "POST",
-        data: {
-            'newsId': newsId,
-            'likeType': likeType
-        }
-    });
-}
+});

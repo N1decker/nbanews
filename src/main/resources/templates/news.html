@@ -7,7 +7,6 @@
     <div class="horizontal-center" style="margin-right: unset">
         <tr th:each="news1 : ${news}">
             <div class="card-container">
-                <!--                <div hidden th:text="${news1.id}"></div>-->
                 <div class="card rounded">
                     <img th:src=" ${news1.image} ? *{'data:image/jpeg;base64,'+news1.image} : ''"
                          class="card-img-top rounded">
@@ -128,5 +127,4 @@
     </button>
 </div>
 </body>
-<head th:include="/fragments/header :: header"></head>
 </html>

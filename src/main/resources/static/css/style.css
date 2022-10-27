@@ -2,11 +2,11 @@
     color: #5ce1e6;
 }
 
-/*@font-face {*/
-/*    font-family: "Arista Pro SemiBold";*/
-/*    font-weight: normal;*/
-/*    font-style: normal;*/
-/*}*/
+@font-face {
+    font-family: "Arista Pro SemiBold";
+    font-weight: normal;
+    font-style: normal;
+}
 
 .editor-info * {
     margin-bottom: unset
@@ -97,4 +97,8 @@ td, th {
 #isAdmin, #isUser,#isEditor {
     margin-left: 10px;
     margin-right: 10px;
+}
+
+#profileSettings {
+    justify-content: center;
 }
