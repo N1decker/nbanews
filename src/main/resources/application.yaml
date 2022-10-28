@@ -18,11 +18,17 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: egor.ershofff@gmail.com
-    password: jcrnokhpzkkrcuwm
+    username: a79690645@gmail.com
+    password: ggcfbvjtwlifbwwz
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-exception: false
+    include-stacktrace: on_param

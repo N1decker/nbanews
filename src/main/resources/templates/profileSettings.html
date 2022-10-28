@@ -10,6 +10,7 @@
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                 <img class="rounded-circle mt-5" width="150px"
                      src="/images/icons/person-circle.svg">
+                <button class="btn btn-secondary">Change avatar</button>
             </div>
         </div>
         <div>
@@ -21,7 +22,7 @@
                     <div class="col-md-12">
                         <label class="labels">Nickname</label>
                         <div class="input-group">
-                            <input id="profile-nickname-input" type="text" class="form-control" th:value="${user.nickname}">
+                            <input id="profile-nickname-input" name="nickname" type="text" class="form-control" th:value="${user.nickname}">
                             <span class="input-group-append" id="change-nickname-btn" style="display: none">
                                 <button class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5"
                                         type="button" style="z-index: 0">
@@ -36,7 +37,7 @@
                     <div class="col-md-12">
                         <label class="labels">Email</label>
                         <div class="input-group">
-                            <input id="profile-email-input" type="text" class="form-control" th:value="${user.email}">
+                            <input id="profile-email-input" name="email" type="text" class="form-control" th:value="${user.email}">
                             <span class="input-group-append" id="change-email-btn" style="display: none">
                                 <button class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5"
                                         type="button" style="z-index: 0">

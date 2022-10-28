@@ -9,6 +9,7 @@ import ru.nidecker.nbanews.email.EmailSender;
 import ru.nidecker.nbanews.entity.Role;
 import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.service.UserService;
+import ru.nidecker.nbanews.validation.EmailValidator;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -16,15 +17,12 @@ import java.util.Set;
 @Service
 @AllArgsConstructor
 public class RegistrationService {
-
-    private final EmailValidator emailValidator;
     private final UserService userService;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
 
     public String register(RegistrationRequest request) {
-        boolean isValidEmail = emailValidator.test(request.getEmail());
-        if (!isValidEmail) throw new IllegalStateException("email not valid");
+        EmailValidator.validate(request.getEmail());
 
         String token = userService.signUpUser(
                 new User(
