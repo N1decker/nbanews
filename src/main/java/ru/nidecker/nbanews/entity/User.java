@@ -44,6 +44,8 @@ public class User implements UserDetails {
     @NotBlank
     private String password;
 
+    private String avatar;
+
     private boolean enabled;
     private boolean locked;
 

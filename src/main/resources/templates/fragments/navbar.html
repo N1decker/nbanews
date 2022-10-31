@@ -17,7 +17,7 @@
                 <div class="dropdown show">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="/images/icons/person-circle.svg" width="30" height="30" class="rounded-circle">
+                        <img th:src=" ${user.avatar} != null ? *{'data:image/jpeg;base64,'+ user.avatar} : '/images/icons/person-circle.svg'" width="35" height="35" class="rounded-circle">
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item nav-link" href="/profile/settings">Settings</a>

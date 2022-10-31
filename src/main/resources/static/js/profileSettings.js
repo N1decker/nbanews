@@ -1,12 +1,13 @@
 $("#profile-email-input, #profile-nickname-input").on("click", function () {
     let inputField = $(this)
     let beforeUpdate = inputField.val();
-    console.log(beforeUpdate)
     let changeDataBtnConfirm = inputField.attr('id') === 'profile-email-input' ? $('#change-email-btn') : $('#change-nickname-btn');
     changeDataBtnConfirm.show();
     changeDataBtnConfirm.one("click", function () {
         if (inputField.val() === '') {
             warningNotify('cannot be empty')
+        } else if (inputField.val() === beforeUpdate) {
+            changeDataBtnConfirm.hide();
         } else {
             $.ajax({
                 url: "/api/profile",
@@ -62,3 +63,30 @@ $('#profile-new-pass-input').on('click', function () {
         }
     })
 })
+
+$("#change-avatar-btn").on("click",function (e){
+    let form = $('<input type="file" name="avatar">');
+    form.click()
+    form.on("change",onFileSelected);
+});
+
+let onFileSelected = function(e){
+    let formData = new FormData();
+    formData.append('avatar', $(this)[0].files[0])
+    $.ajax({
+        url: "/api/profile/change-avatar",
+        method: "POST",
+        type: "POST",
+        dataType: 'text',
+        contentType: false,
+        processData: false,
+        cache: false,
+        data: formData,
+        success: function (response) {
+            successNotify("avatar will change after the page is reloaded");
+        },
+        error: function () {
+            warningNotify("something went wrong");
+        }
+    })
+};

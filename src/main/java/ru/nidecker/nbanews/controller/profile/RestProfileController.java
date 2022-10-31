@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.exception.FieldAlreadyTakenException;
 import ru.nidecker.nbanews.exception.WrongPasswordException;
@@ -15,6 +16,7 @@ import ru.nidecker.nbanews.validation.EmailValidator;
 import ru.nidecker.nbanews.validation.PasswordValidation;
 
 import javax.transaction.Transactional;
+import java.util.Base64;
 
 @RestController
 @RequiredArgsConstructor
@@ -74,5 +76,16 @@ public class RestProfileController {
        }
 
        userRepository.changePassword(bCryptPasswordEncoder.encode(newPassword), user.getEmail());
+    }
+
+    @PostMapping("/change-avatar")
+    public void changeAvatar(@AuthenticationPrincipal User auth,
+                             @RequestParam("avatar") MultipartFile avatar) {
+        User user = userRepository.findById(auth.getId()).orElseThrow();
+        try {
+            user.setAvatar(Base64.getEncoder().encodeToString(avatar.getBytes()));
+        } catch (Exception ignored) {}
+
+        userRepository.save(user);
     }
 }

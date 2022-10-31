@@ -14,6 +14,7 @@ import ru.nidecker.nbanews.entity.LikeDislike;
 import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.repository.LikeDislikeRepository;
 import ru.nidecker.nbanews.repository.NewsRepository;
+import ru.nidecker.nbanews.repository.UserRepository;
 import ru.nidecker.nbanews.service.NewsService;
 
 import java.util.Map;
@@ -29,6 +30,8 @@ public class MainController {
 
     private final NewsService newsService;
 
+    private final UserRepository userRepository;
+
 
     @GetMapping
     public String main() {
@@ -37,6 +40,7 @@ public class MainController {
 
     @GetMapping("/news")
     public String news(Model model, @AuthenticationPrincipal User user) {
+        model.addAttribute("user", userRepository.findByEmail(user.getEmail()).orElseThrow());
         model.addAttribute("news", newsRepository.findAllByOrderByIdDesc());
         Map<String, LikeDislike> likes = likeDislikeRepository.findAllByUserId(user.getId())
                 .stream()
