@@ -2,14 +2,17 @@ package ru.nidecker.nbanews.controller.profile;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.exception.FieldAlreadyTakenException;
+import ru.nidecker.nbanews.exception.WrongPasswordException;
 import ru.nidecker.nbanews.repository.UserRepository;
 import ru.nidecker.nbanews.validation.EmailValidator;
+import ru.nidecker.nbanews.validation.PasswordValidation;
 
 import javax.transaction.Transactional;
 
@@ -19,6 +22,8 @@ import javax.transaction.Transactional;
 public class RestProfileController {
 
     private final UserRepository userRepository;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping
     @Transactional
@@ -39,7 +44,10 @@ public class RestProfileController {
             case "email" -> {
                 User byEmail = userRepository.findByEmail(changeTo).orElse(null);
                 if (byEmail == null) {
-                    EmailValidator.validate(changeTo);
+                    boolean isValidEmail = EmailValidator.validate(changeTo);
+                    if (!isValidEmail)
+                        throw new IllegalStateException("email not valid");
+
                     User changeEmail = userRepository.findById(user.getId()).orElseThrow();
                     changeEmail.setEmail(changeTo);
                     userRepository.save(changeEmail);
@@ -48,5 +56,23 @@ public class RestProfileController {
                 }
             }
         }
+    }
+
+    @Transactional
+    @PostMapping("/change-password")
+    public void changePassword(@AuthenticationPrincipal User auth,
+                               @RequestParam("oldPassword") String oldPassword,
+                               @RequestParam("newPassword") String newPassword) {
+       User user = userRepository.findById(auth.getId()).orElseThrow();
+       if (!bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
+           throw new WrongPasswordException("wrong old password");
+       }
+//        boolean isValidPassword = PasswordValidation.isValidPassword(newPassword);
+        String invalidPasswordMessage = PasswordValidation.isValidPassword(newPassword);
+       if (invalidPasswordMessage != null) {
+           throw new WrongPasswordException("invalid password \r" + invalidPasswordMessage);
+       }
+
+       userRepository.changePassword(bCryptPasswordEncoder.encode(newPassword), user.getEmail());
     }
 }

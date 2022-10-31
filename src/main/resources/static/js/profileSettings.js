@@ -24,7 +24,41 @@ $("#profile-email-input, #profile-nickname-input").on("click", function () {
                     warningNotify(message)
                 }
             });
-        changeDataBtnConfirm.hide();
+            changeDataBtnConfirm.hide();
+        }
+    })
+})
+
+
+$('#profile-new-pass-input').on('click', function () {
+    let oldPassword = $('#profile-old-pass-input')
+    let newPassword = $(this)
+    let changeDataBtnConfirm = $('#change-pass-btn');
+    changeDataBtnConfirm.show();
+    changeDataBtnConfirm.one("click", function () {
+        if (oldPassword.val() === '') {
+            warningNotify('enter your current password')
+        }
+        if (newPassword.val() === '') {
+            warningNotify('enter your new password')
+        } else {
+            $.ajax({
+                url: "/api/profile/change-password",
+                method: "POST",
+                data: {
+                    newPassword: newPassword.val(),
+                    oldPassword: oldPassword.val()
+                },
+                success: function () {
+                    successNotify('password has been successfully changed')
+                },
+                error: function (xhr) {
+                    let message = JSON.parse(xhr.responseText)['message'].replaceAll('.\s', '<br>')
+                    newPassword.val('');
+                    warningNotify(message)
+                }
+            });
+            changeDataBtnConfirm.hide();
         }
     })
 })

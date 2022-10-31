@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import ru.nidecker.nbanews.exception.ErrorDetails;
 import ru.nidecker.nbanews.exception.FieldAlreadyTakenException;
+import ru.nidecker.nbanews.exception.WrongPasswordException;
 
 import java.util.Date;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({FieldAlreadyTakenException.class, IllegalStateException.class})
+    @ExceptionHandler({FieldAlreadyTakenException.class, IllegalStateException.class, WrongPasswordException.class})
     public ResponseEntity<?> handleFieldAlreadyTaken(FieldAlreadyTakenException exception, WebRequest request) {
         ErrorDetails errorDetails =
                 new ErrorDetails(new Date(), exception.getMessage(), request.getDescription(false));
