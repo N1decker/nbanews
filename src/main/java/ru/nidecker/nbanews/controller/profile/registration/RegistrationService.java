@@ -8,8 +8,10 @@ import ru.nidecker.nbanews.controller.profile.registration.token.ConfirmationTok
 import ru.nidecker.nbanews.email.EmailSender;
 import ru.nidecker.nbanews.entity.Role;
 import ru.nidecker.nbanews.entity.User;
+import ru.nidecker.nbanews.exception.WrongPasswordException;
 import ru.nidecker.nbanews.service.UserService;
 import ru.nidecker.nbanews.validation.EmailValidator;
+import ru.nidecker.nbanews.validation.PasswordValidation;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -22,7 +24,13 @@ public class RegistrationService {
     private final EmailSender emailSender;
 
     public String register(RegistrationRequest request) {
-        EmailValidator.validate(request.getEmail());
+        boolean isValidEmail = EmailValidator.validate(request.getEmail());
+        if (!isValidEmail)
+            throw new IllegalStateException("email not valid");
+
+        String invalidPasswordMessage = PasswordValidation.isValidPassword(request.getPassword());
+        if (invalidPasswordMessage != null)
+            throw new WrongPasswordException(invalidPasswordMessage);
 
         String token = userService.signUpUser(
                 new User(

@@ -4,6 +4,7 @@ package ru.nidecker.nbanews.controller.profile.registration.token;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import ru.nidecker.nbanews.entity.User;
 
 import javax.persistence.*;
@@ -21,11 +22,11 @@ public class ConfirmationToken {
 
     @Column(nullable = false)
     private String token;
-    @Column(nullable = false)
 
+    @Column(nullable = false)
     private LocalDateTime createdAt;
-    @Column(nullable = false)
 
+    @Column(nullable = false)
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
 

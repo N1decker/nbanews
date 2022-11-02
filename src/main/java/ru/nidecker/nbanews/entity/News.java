@@ -1,5 +1,7 @@
 package ru.nidecker.nbanews.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.URL;
@@ -10,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -36,9 +39,20 @@ public class News {
     private LocalDate newsDate = LocalDate.now();
 
     private LocalTime newsTime = LocalTime.now().truncatedTo(TimeUnit.MINUTES.toChronoUnit());
+
+    private String editor;
 //    @NotBlank
-    @ManyToOne
-    private User editor;
+//    @ManyToOne
+//    @JsonBackReference
+//    private User editor;
+
+    @OneToMany(orphanRemoval = true, mappedBy = "news", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<Comment> comments;
+
+    @OneToMany(orphanRemoval = true, mappedBy = "news", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<LikeDislike> likeDislikes;
 
     @Override
     public boolean equals(Object o) {

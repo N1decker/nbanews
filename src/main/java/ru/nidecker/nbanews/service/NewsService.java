@@ -27,7 +27,7 @@ public class NewsService {
             news.setSourceLogo(Base64.getEncoder().encodeToString(sourceLogo.getBytes()));
         } catch (Exception ignored) {}
 
-        news.setEditor(user);
+        news.setEditor(user.getNickname());
         news.setTitle(title);
         news.setSource(source);
         return newsRepository.save(news);

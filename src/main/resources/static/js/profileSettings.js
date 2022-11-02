@@ -54,9 +54,14 @@ $('#profile-new-pass-input').on('click', function () {
                     successNotify('password has been successfully changed')
                 },
                 error: function (xhr) {
-                    let message = JSON.parse(xhr.responseText)['message'].replaceAll('.\s', '<br>')
+                    let messageList = '<ul>'
+                    let message = JSON.parse(xhr.responseText)['message'].replaceAll('. ', '.. ').split('. ')
+                    $(message).each(function () {
+                        messageList += "<li>" + this + "</li>";
+                    })
+                    messageList += '</ul>'
                     newPassword.val('');
-                    warningNotify(message)
+                    warningNotify(messageList)
                 }
             });
             changeDataBtnConfirm.hide();

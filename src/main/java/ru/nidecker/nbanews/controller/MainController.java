@@ -56,6 +56,6 @@ public class MainController {
                        @RequestParam("sourceLogo") MultipartFile sourceLogo,
                        @AuthenticationPrincipal User user) {
         newsService.save(title, image, source, sourceLogo, user);
-        return "redirect:/";
+        return "redirect:/news";
     }
 }

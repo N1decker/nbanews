@@ -2,7 +2,6 @@ package ru.nidecker.nbanews.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cascade;
@@ -24,7 +23,6 @@ public class LikeDislike {
 
     @ManyToOne
     @JsonIgnoreProperties(value = {"title", "image", "source", "sourceLogo"})
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private News news;
 
     @ManyToOne

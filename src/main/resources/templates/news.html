@@ -51,8 +51,8 @@
                             </a>
                         </div>
                         <div class="editor-info">
-                            <p class="text-center" th:text="${news1.newsTime}"></p>
-                            <p class="text-center" th:text="${news1.editor.nickname}"></p>
+                            <p class="text-center" th:text="${news1.newsDate + ' ' + news1.newsTime}"></p>
+                            <p class="text-center" th:text="${'Editor: ' + news1.editor}"></p>
                         </div>
                     </div>
                 </div>

@@ -65,17 +65,17 @@ public class RestProfileController {
     public void changePassword(@AuthenticationPrincipal User auth,
                                @RequestParam("oldPassword") String oldPassword,
                                @RequestParam("newPassword") String newPassword) {
-       User user = userRepository.findById(auth.getId()).orElseThrow();
-       if (!bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
-           throw new WrongPasswordException("wrong old password");
-       }
+        User user = userRepository.findById(auth.getId()).orElseThrow();
+        if (!bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new WrongPasswordException("wrong old password");
+        }
 //        boolean isValidPassword = PasswordValidation.isValidPassword(newPassword);
         String invalidPasswordMessage = PasswordValidation.isValidPassword(newPassword);
-       if (invalidPasswordMessage != null) {
-           throw new WrongPasswordException("invalid password \r" + invalidPasswordMessage);
-       }
+        if (invalidPasswordMessage != null) {
+            throw new WrongPasswordException(invalidPasswordMessage);
+        }
 
-       userRepository.changePassword(bCryptPasswordEncoder.encode(newPassword), user.getEmail());
+        userRepository.changePassword(bCryptPasswordEncoder.encode(newPassword), user.getEmail());
     }
 
     @PostMapping("/change-avatar")
@@ -84,7 +84,8 @@ public class RestProfileController {
         User user = userRepository.findById(auth.getId()).orElseThrow();
         try {
             user.setAvatar(Base64.getEncoder().encodeToString(avatar.getBytes()));
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         userRepository.save(user);
     }
