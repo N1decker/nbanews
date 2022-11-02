@@ -1,4 +1,4 @@
-package ru.nidecker.nbanews.validation;
+package ru.nidecker.nbanews.util.validation;
 
 import org.springframework.stereotype.Service;
 

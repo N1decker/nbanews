@@ -1,17 +1,17 @@
-package ru.nidecker.nbanews.controller.profile.registration;
+package ru.nidecker.nbanews.registration;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.nidecker.nbanews.controller.profile.registration.token.ConfirmationToken;
-import ru.nidecker.nbanews.controller.profile.registration.token.ConfirmationTokenService;
-import ru.nidecker.nbanews.email.EmailSender;
+import ru.nidecker.nbanews.registration.token.ConfirmationToken;
+import ru.nidecker.nbanews.registration.token.ConfirmationTokenService;
+import ru.nidecker.nbanews.util.email.EmailSender;
 import ru.nidecker.nbanews.entity.Role;
 import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.exception.WrongPasswordException;
 import ru.nidecker.nbanews.service.UserService;
-import ru.nidecker.nbanews.validation.EmailValidator;
-import ru.nidecker.nbanews.validation.PasswordValidation;
+import ru.nidecker.nbanews.util.validation.EmailValidator;
+import ru.nidecker.nbanews.util.validation.PasswordValidator;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -28,7 +28,7 @@ public class RegistrationService {
         if (!isValidEmail)
             throw new IllegalStateException("email not valid");
 
-        String invalidPasswordMessage = PasswordValidation.isValidPassword(request.getPassword());
+        String invalidPasswordMessage = PasswordValidator.isValidPassword(request.getPassword());
         if (invalidPasswordMessage != null)
             throw new WrongPasswordException(invalidPasswordMessage);
 

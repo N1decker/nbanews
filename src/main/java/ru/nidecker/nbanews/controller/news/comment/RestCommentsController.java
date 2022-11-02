@@ -1,4 +1,4 @@
-package ru.nidecker.nbanews.controller;
+package ru.nidecker.nbanews.controller.news.comment;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

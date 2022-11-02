@@ -1,4 +1,4 @@
-package ru.nidecker.nbanews.email;
+package ru.nidecker.nbanews.util.email;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

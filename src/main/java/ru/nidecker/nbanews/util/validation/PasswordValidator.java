@@ -1,4 +1,4 @@
-package ru.nidecker.nbanews.validation;
+package ru.nidecker.nbanews.util.validation;
 
 import org.passay.*;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 @Service
-public class PasswordValidation {
+public class PasswordValidator {
 
     public static final String PASSWORD_PATTERN =
             "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
@@ -16,7 +16,7 @@ public class PasswordValidation {
     private static final Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 
     public static String isValidPassword(String password) {
-        PasswordValidator validator = new PasswordValidator(Arrays.asList(
+        org.passay.PasswordValidator validator = new org.passay.PasswordValidator(Arrays.asList(
                 // at least 8 characters
                 new LengthRule(8, 30),
 

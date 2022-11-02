@@ -1,6 +1,5 @@
-package ru.nidecker.nbanews.email;
+package ru.nidecker.nbanews.util.email;
 
 public interface EmailSender {
-
     void send(String to, String email);
 }

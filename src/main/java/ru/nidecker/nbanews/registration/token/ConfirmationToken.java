@@ -1,4 +1,4 @@
-package ru.nidecker.nbanews.controller.profile.registration.token;
+package ru.nidecker.nbanews.registration.token;
 
 
 import lombok.Getter;

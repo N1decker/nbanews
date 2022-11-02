@@ -1,4 +1,4 @@
-package ru.nidecker.nbanews.controller.profile.registration;
+package ru.nidecker.nbanews.registration;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

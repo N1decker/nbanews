@@ -12,8 +12,8 @@ import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.exception.FieldAlreadyTakenException;
 import ru.nidecker.nbanews.exception.WrongPasswordException;
 import ru.nidecker.nbanews.repository.UserRepository;
-import ru.nidecker.nbanews.validation.EmailValidator;
-import ru.nidecker.nbanews.validation.PasswordValidation;
+import ru.nidecker.nbanews.util.validation.EmailValidator;
+import ru.nidecker.nbanews.util.validation.PasswordValidator;
 
 import javax.transaction.Transactional;
 import java.util.Base64;
@@ -69,8 +69,8 @@ public class RestProfileController {
         if (!bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
             throw new WrongPasswordException("wrong old password");
         }
-//        boolean isValidPassword = PasswordValidation.isValidPassword(newPassword);
-        String invalidPasswordMessage = PasswordValidation.isValidPassword(newPassword);
+//        boolean isValidPassword = PasswordValidator.isValidPassword(newPassword);
+        String invalidPasswordMessage = PasswordValidator.isValidPassword(newPassword);
         if (invalidPasswordMessage != null) {
             throw new WrongPasswordException(invalidPasswordMessage);
         }
