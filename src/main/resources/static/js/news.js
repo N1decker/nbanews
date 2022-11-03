@@ -28,15 +28,15 @@ $('.send-msg-btn').on('click', function () {
         let date = new Date();
         $("#message-list" + id).append(
             "<li class='list-group-item mb-1'>" +
-                "<div class='row m-0'>" +
-                    "<div>" +
-                    //TODO: get user name and comment date
-                    "</div>" +
-                    "<div style='right: 5px; position: absolute; color: grey'>" +
-                        date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() +
-                    "</div>" +
-                "</div>" +
-                "<span style='margin-left: 20px'>" + message + "</span>" +
+            "<div class='row m-0'>" +
+            "<div>" +
+            //TODO: get user name and comment date
+            "</div>" +
+            "<div style='right: 5px; position: absolute; color: grey'>" +
+            date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() +
+            "</div>" +
+            "</div>" +
+            "<span style='margin-left: 20px'>" + message + "</span>" +
             "</li>");
     } else {
         warningNotify('type something')
@@ -60,13 +60,13 @@ $('.chat').on('click', function () {
                     console.log(item)
                     list +=
                         "<li class='list-group-item mb-1'>" +
-                            "<div class='row m-0'>" +
-                                "<div>" + item.user.nickname + "</div>" +
-                                "<div style='right: 5px; position: absolute; color: grey'>" +
-                                    item.dateTime.replace('T', ' ').replaceAll('-', '/').substring(0, 16) +
-                                "</div>" +
-                            "</div>" +
-                            "<span style='margin-left: 20px'>" + item.comment + "</span>" +
+                        "<div class='row m-0'>" +
+                        "<div>" + item.user.nickname + "</div>" +
+                        "<div style='right: 5px; position: absolute; color: grey'>" +
+                        item.dateTime.replace('T', ' ').replaceAll('-', '/').substring(0, 16) +
+                        "</div>" +
+                        "</div>" +
+                        "<span style='margin-left: 20px'>" + item.comment + "</span>" +
                         "</li>";
                 })
                 $("#message-list" + id).html(list);
@@ -94,3 +94,17 @@ $('.like, .dislike').on('click', function () {
         clickedBtn.css('fill', 'black');
     }
 });
+
+$(function () {
+    $("#js-select2").select2({
+        minimumResultsForSearch: -1,
+        templateResult: function (option) {
+            const $span = $("<span><img src='/images/sourceLogos/" + option.id + ".png' width='60px'/> " + option.text + "</span>");
+            return $span;
+        },
+        templateSelection: function (option) {
+            const $span = $("<span><img src='/images/sourceLogos/" + option.id + ".png' width='60px'/> " + option.text + "</span>");
+            return $span;
+        }
+    });
+})

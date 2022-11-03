@@ -25,12 +25,9 @@ public class RestCommentsController {
     }
 
     @GetMapping("/{id}/comments")
-    @Transactional
     public List<Comment> getAll(@PathVariable long id) {
         log.info("get comments by newsId="+id);
-        List<Comment> allByNewsId = newsUserRelationshipRepository.findAllByNewsId(id);
-        log.info(" get end");
-        return allByNewsId;
+        return newsUserRelationshipRepository.findAllByNewsId(id);
     }
 
     @PostMapping("/{id}/comments")

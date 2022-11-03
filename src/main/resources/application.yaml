@@ -17,7 +17,6 @@ spring:
           batch_size: 100
     generate-ddl: true
     open-in-view: false
-
   mail:
     host: smtp.gmail.com
     port: 587
