@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nidecker.nbanews.entity.User;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -23,4 +25,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User u SET u.password = :password WHERE u.email = :email")
     void changePassword(String password, String email);
+
+    @Transactional
+    @Modifying
+    void deleteUsersByIdIn(List<Long> ids);
+
+
 }

@@ -99,12 +99,10 @@ $(function () {
     $("#js-select2").select2({
         minimumResultsForSearch: -1,
         templateResult: function (option) {
-            const $span = $("<span><img src='/images/sourceLogos/" + option.id + ".png' width='60px'/> " + option.text + "</span>");
-            return $span;
+            return $("<span><img src='/images/sourceLogos/" + option.id + ".png' width='60px' alt='+" + option.text + " +'  /> " + option.text + "</span>");
         },
         templateSelection: function (option) {
-            const $span = $("<span><img src='/images/sourceLogos/" + option.id + ".png' width='60px'/> " + option.text + "</span>");
-            return $span;
+            return $("<span><img src='/images/sourceLogos/" + option.id + ".png' width='60px' alt='+" + option.text + " +'/> " + option.text + "</span>");
         }
     });
 })

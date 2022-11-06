@@ -8,6 +8,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.nidecker.nbanews.registration.token.ConfirmationToken;
@@ -20,14 +22,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.hibernate.annotations.CascadeType.ALL;
+import static org.hibernate.annotations.CascadeType.REMOVE;
 
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
 @ToString
-//@AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
 
@@ -54,24 +55,28 @@ public class User implements UserDetails {
 
     @OneToMany(orphanRemoval = true, mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonBackReference
-//    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ToString.Exclude
     private List<Comment> comments;
 
     @OneToMany(orphanRemoval = true, mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonBackReference
-//    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ToString.Exclude
     private List<LikeDislike> likeDislikes;
 
     @OneToMany(orphanRemoval = true, mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonBackReference
-//    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ToString.Exclude
     private List<ConfirmationToken> tokens;
 
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @Column(name = "role")
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    @Cascade(ALL)
+    @CollectionTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"))
+    @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @Cascade(REMOVE)
     private Set<Role> roles;
 
     public User(String nickname,

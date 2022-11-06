@@ -1,6 +1,7 @@
 package ru.nidecker.nbanews.controller.news;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping(value = "/news", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@Slf4j
 public class NewsController {
     private final LikeDislikeRepository likeDislikeRepository;
 
@@ -32,9 +34,9 @@ public class NewsController {
 
     private final UserRepository userRepository;
 
-
     @GetMapping
     public String news(Model model, @AuthenticationPrincipal User user) {
+        log.info(String.format("go to news page by user %s", user));
         model.addAttribute("user", userRepository.findByEmail(user.getEmail()).orElseThrow());
         model.addAttribute("news", newsRepository.findAllByOrderByIdDesc());
         Map<String, LikeDislike> likes = likeDislikeRepository.findAllByUserId(user.getId())
@@ -50,6 +52,7 @@ public class NewsController {
                        @RequestParam("source") String source,
                        @RequestParam("sourceLogo") MultipartFile sourceLogo,
                        @AuthenticationPrincipal User user) {
+        log.info(String.format("save news by user %s", user));
         newsService.save(title, image, source, sourceLogo, user);
         return "redirect:/news";
     }

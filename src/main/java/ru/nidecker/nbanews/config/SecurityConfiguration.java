@@ -16,12 +16,9 @@ import ru.nidecker.nbanews.service.UserService;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfiguration {
-
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
     private final AuthenticationFailureHandler authenticationFailureHandler;
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
