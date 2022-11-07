@@ -16,14 +16,15 @@
             <a class="btn btn-primary mr-1" role="button" onclick="signIn('admin@gmail.com','wccbZvtz@SfKa+W3')">
                 Login as Admin
             </a>
-<!--            <a class="btn btn-primary mr-1" role="button" onclick="signIn('user@yandex.com', 'user')">-->
-<!--                Login as User-->
-<!--            </a>-->
+            <!--            <a class="btn btn-primary mr-1" role="button" onclick="signIn('user@yandex.com', 'user')">-->
+            <!--                Login as User-->
+            <!--            </a>-->
         </div>
         <div>
             <form id="loginForm" class="form-signIn form-inline">
                 <input type="text" class="form-control mr-1" placeholder="Email" name="username" id="username" required>
-                <input type="password" class="form-control mr-1" placeholder="Password" name="password" id="password" required>
+                <input type="password" class="form-control mr-1" placeholder="Password" name="password" id="password"
+                       required>
                 <button id="signIn-btn" class="btn btn-success" type="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
@@ -40,17 +41,38 @@
 
 <div class="container">
     <div class="col">
-        <div class="row">
+        <div class="row" style="justify-content: center; align-content: center">
             <div class="collapse" id="collapseExample">
                 <div class="card card-body">
-                    Some placeholder content for the collapse component. This panel is hidden by default but revealed
-                    when
-                    the
-                    user activates the relevant trigger.
+                    <form style="text-align: center">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="nicknameSignUpInput" placeholder="Nickname">
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <input type="email" class="form-control" id="emailSignUpInput"
+                                       aria-describedby="emailHelp" placeholder="Email address">
+                                    <span class="input-group-append">
+                                        <button type="button" id="temp-mail-redirect"
+                                                class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor" class="bi bi-info-lg" viewBox="0 0 16 16">
+                                                <path d="m9.708 6.075-3.024.379-.108.502.595.108c.387.093.464.232.38.619l-.975 4.577c-.255 1.183.14 1.74 1.067 1.74.72 0 1.554-.332 1.933-.789l.116-.549c-.263.232-.65.325-.905.325-.363 0-.494-.255-.402-.704l1.323-6.208Zm.091-2.755a1.32 1.32 0 1 1-2.64 0 1.32 1.32 0 0 1 2.64 0Z"/>
+                                            </svg>
+                                        </button>
+                                    </span>
+                            </div>
+                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="passwordSignUpInput" placeholder="Password">
+                        </div>
+                        <button type="button" id="signUp-form-btn" class="btn btn-primary">Sign up</button>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="justify-content: center; align-content: center">
             <h3>
                 Здесь будет описание пет-проекта и использованные технологии
             </h3>

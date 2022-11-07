@@ -102,3 +102,14 @@ td, th {
 #profileSettings {
     justify-content: center;
 }
+
+#temp-mail-redirect:hover:after {
+    content: "You can use a temporary email by clicking on this button";
+    position: absolute;
+    text-align: center;
+    top: 0;
+    height: 2rem;
+    background-color: gray;
+    border-radius: 25px;
+    color: black;
+}

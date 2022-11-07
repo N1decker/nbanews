@@ -55,3 +55,43 @@ function successNotify(text) {
     }
     toastr['success'](text)
 }
+
+$('#signUp-form-btn').on('click', function () {
+    let test = $(this)
+    // successNotifyRightOfTheInputField($(this), 'successTest')
+    // infoNotifyRightOfTheInputField($(this), 'infoTest')
+    // warningNotifyRightOfTheInputField($(this), 'warningTest')
+    errorNotifyRightOfTheInputField($(this), 'errorTest')
+})
+
+function successNotifyRightOfTheInputField(inputField, text) {
+    $(inputField).notify(text, {
+        position : 'right',
+        className : 'success'
+    })
+}
+
+function infoNotifyRightOfTheInputField(inputField, text) {
+    $(inputField).notify(text, {
+        position : 'right',
+        className : 'info'
+    })
+}
+
+function warningNotifyRightOfTheInputField(inputField, text) {
+    $(inputField).notify(text, {
+        position : 'right',
+        className : 'warn'
+    })
+}
+
+function errorNotifyRightOfTheInputField(inputField, text) {
+    $(inputField).notify(text, {
+        position : 'right',
+        className : 'error'
+    })
+}
+
+$('#temp-mail-redirect').click(function() {
+    window.open('https://temp-mail.org/', '_blank')
+});
