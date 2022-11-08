@@ -54,20 +54,30 @@ $('#profile-new-pass-input').on('click', function () {
                     successNotify('password has been successfully changed')
                 },
                 error: function (xhr) {
-                    let messageList = '<ul>'
-                    let message = JSON.parse(xhr.responseText)['message'].replaceAll('. ', '.. ').split('. ')
-                    $(message).each(function () {
-                        messageList += "<li>" + this + "</li>";
-                    })
-                    messageList += '</ul>'
+                    // let messageList = '<ul>'
+                    // let message = JSON.parse(xhr.responseText)['message'].replaceAll('. ', '.. ').split('. ')
+                    // $(message).each(function () {
+                    //     messageList += "<li>" + this + "</li>";
+                    // })
+                    // messageList += '</ul>'
                     newPassword.val('');
-                    warningNotify(messageList)
+                    warningNotify(parseMessageToUnorderedListByOneDotForNotify(JSON.parse(xhr.responseText)['message']))
                 }
             });
             changeDataBtnConfirm.hide();
         }
     })
 })
+
+function parseMessageToUnorderedListByOneDotForNotify(text) {
+    let messageList = '<ul>'
+    let message = text.replaceAll('. ', '.. ').split('. ')
+    $(message).each(function () {
+        messageList += "<li>" + this + "</li>";
+    })
+    messageList += '</ul>'
+    return messageList;
+}
 
 $("#change-avatar-btn").on("click",function (e){
     let form = $('<input type="file" name="avatar">');

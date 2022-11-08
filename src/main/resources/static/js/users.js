@@ -6,7 +6,7 @@ $("#isAdmin, #isUser, #isEditor, #enabled").on("click", function () {
     }
 });
 
-$('#deleteUser').on('click', function () {
+$('.delete-user-btn').on('click', function () {
     let rowId = $(this).parents('tr').attr('id')
     let $row = $('#' + rowId);
 

@@ -5,7 +5,7 @@ function getFileName(inputName) {
         filename = filename.substring(lastIndex + 1);
     }
     $('#' + inputName + '-label').html(filename);
-};
+}
 
 $("#logout-btn").on('click', function (e) {
     e.preventDefault();
@@ -21,7 +21,11 @@ $("#logout-btn").on('click', function (e) {
 $("#signIn-btn").on("click", function () {
     let email = $('#username').val();
     let password = $('#password').val();
-    signIn(email, password);
+    if (email === null || email === '') {
+        warningNotifyBottomOfTheInputField($('#username'), 'you forgot to enter your email address')
+    } else {
+        signIn(email, password);
+    }
 })
 
 function signIn(email, password) {
@@ -57,41 +61,87 @@ function successNotify(text) {
 }
 
 $('#signUp-form-btn').on('click', function () {
-    let test = $(this)
-    // successNotifyRightOfTheInputField($(this), 'successTest')
-    // infoNotifyRightOfTheInputField($(this), 'infoTest')
-    // warningNotifyRightOfTheInputField($(this), 'warningTest')
-    errorNotifyRightOfTheInputField($(this), 'errorTest')
-})
+    let nickname = $('#nicknameSignUpInput').val();
+    let password = $('#passwordSignUpInput').val();
+    let email = $('#emailSignUpInput').val();
+
+    $('#sign-up-form *input').each(function () {
+        if (!$(this).val()) {
+            warningNotifyLeftOfTheInputField($(this), 'cannot be empty')
+        }
+    });
+
+    if (checkInputIsValid(email) && checkInputIsValid(password) && checkInputIsValid(nickname)) {
+    // if (email != null && email !== '' &&
+    //     nickname != null && nickname !== '' &&
+    //     password != null && password !== '') {
+        $.ajax({
+            url: "/api/v1/registration",
+            method: "POST",
+            data: {
+                "nickname": nickname,
+                "email": email,
+                "password": password
+            },
+            success: function () {
+                let text = 'We have sent an activation email to ' + email + '. ' +
+                    'Follow the link provided in it to start the procedure. ' +
+                    'If for some reason you haven\'t received the email, try changing the address again or write to us - nb4news@gmail.com.'
+                successNotify(parseMessageToUnorderedListByOneDotForNotify(text))
+            },
+            error: function (xhr) {
+                warningNotify(parseMessageToUnorderedListByOneDotForNotify(JSON.parse(xhr.responseText)['message']))
+            }
+        });
+    }
+});
+
+function checkInputIsValid(input) {
+    return (input != null && input !== '');
+}
 
 function successNotifyRightOfTheInputField(inputField, text) {
     $(inputField).notify(text, {
-        position : 'right',
-        className : 'success'
+        position: 'right',
+        className: 'success'
     })
 }
 
 function infoNotifyRightOfTheInputField(inputField, text) {
     $(inputField).notify(text, {
-        position : 'right',
-        className : 'info'
+        position: 'right',
+        className: 'info'
     })
 }
 
 function warningNotifyRightOfTheInputField(inputField, text) {
     $(inputField).notify(text, {
-        position : 'right',
-        className : 'warn'
+        position: 'right',
+        className: 'warn'
+    })
+}
+
+function warningNotifyLeftOfTheInputField(inputField, text) {
+    $(inputField).notify(text, {
+        position: 'left',
+        className: 'warn'
+    })
+}
+
+function warningNotifyBottomOfTheInputField(inputField, text) {
+    $(inputField).notify(text, {
+        position: 'bottom center',
+        className: 'warn'
     })
 }
 
 function errorNotifyRightOfTheInputField(inputField, text) {
     $(inputField).notify(text, {
-        position : 'right',
-        className : 'error'
+        position: 'right',
+        className: 'error'
     })
 }
 
-$('#temp-mail-redirect').click(function() {
+$('#temp-mail-redirect').click(function () {
     window.open('https://temp-mail.org/', '_blank')
 });

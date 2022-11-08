@@ -5,15 +5,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Service
 public class PasswordValidator {
-
-    public static final String PASSWORD_PATTERN =
-            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
-
-    private static final Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 
     public static String isValidPassword(String password) {
         org.passay.PasswordValidator validator = new org.passay.PasswordValidator(Arrays.asList(
@@ -41,9 +35,6 @@ public class PasswordValidator {
             return null;
         }
         List<String> messages = validator.getMessages(result);
-        String messageTemplate = String.join(" ", messages);
-        return messageTemplate;
-//        Matcher matcher = pattern.matcher(password);
-//        return matcher.matches();
+        return String.join(" ", messages);
     }
 }
