@@ -54,12 +54,6 @@ $('#profile-new-pass-input').on('click', function () {
                     successNotify('password has been successfully changed')
                 },
                 error: function (xhr) {
-                    // let messageList = '<ul>'
-                    // let message = JSON.parse(xhr.responseText)['message'].replaceAll('. ', '.. ').split('. ')
-                    // $(message).each(function () {
-                    //     messageList += "<li>" + this + "</li>";
-                    // })
-                    // messageList += '</ul>'
                     newPassword.val('');
                     warningNotify(parseMessageToUnorderedListByOneDotForNotify(JSON.parse(xhr.responseText)['message']))
                 }
@@ -69,23 +63,13 @@ $('#profile-new-pass-input').on('click', function () {
     })
 })
 
-function parseMessageToUnorderedListByOneDotForNotify(text) {
-    let messageList = '<ul>'
-    let message = text.replaceAll('. ', '.. ').split('. ')
-    $(message).each(function () {
-        messageList += "<li>" + this + "</li>";
-    })
-    messageList += '</ul>'
-    return messageList;
-}
-
-$("#change-avatar-btn").on("click",function (e){
+$("#change-avatar-btn").on("click", function (e) {
     let form = $('<input type="file" name="avatar">');
     form.click()
-    form.on("change",onFileSelected);
+    form.on("change", onFileSelected);
 });
 
-let onFileSelected = function(e){
+let onFileSelected = function (e) {
     let formData = new FormData();
     formData.append('avatar', $(this)[0].files[0])
     $.ajax({
@@ -105,3 +89,27 @@ let onFileSelected = function(e){
         }
     })
 };
+
+$('#delete-own-account-confirm-input').on('keyup', function () {
+    let deleteBtn = $('#delete-own-account-confirm-input')
+    let userEmail = deleteBtn.attr('user-email')
+    let userNickname = deleteBtn.attr('user-nickname')
+    let finalDeleteBtn = $('#final-delete-own-account-btn')
+    if ($(this).val() === (userEmail + '/' + userNickname)) {
+        finalDeleteBtn.prop('disabled', false)
+        finalDeleteBtn.on('click', function () {
+            $.ajax({
+                url: "/api/profile/",
+                method: "DELETE",
+                success: function () {
+                    window.location.href = "/";
+                },
+                error: function (xhr) {
+                    warningNotify(parseMessageToUnorderedListByOneDotForNotify(JSON.parse(xhr.responseText)['message']))
+                }
+            });
+        })
+    } else {
+        finalDeleteBtn.prop('disabled', true)
+    }
+})

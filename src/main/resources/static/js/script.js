@@ -9,6 +9,10 @@ function getFileName(inputName) {
 
 $("#logout-btn").on('click', function (e) {
     e.preventDefault();
+    logout();
+});
+
+function logout() {
     $.ajax({
         url: "/logout",
         method: "POST",
@@ -16,7 +20,7 @@ $("#logout-btn").on('click', function (e) {
             window.location.href = "/";
         }
     });
-});
+}
 
 $("#signIn-btn").on("click", function () {
     let email = $('#username').val();
@@ -95,6 +99,16 @@ $('#signUp-form-btn').on('click', function () {
         });
     }
 });
+
+function parseMessageToUnorderedListByOneDotForNotify(text) {
+    let messageList = '<ul>'
+    let message = text.replaceAll('. ', '.. ').split('. ')
+    $(message).each(function () {
+        messageList += "<li>" + this + "</li>";
+    })
+    messageList += '</ul>'
+    return messageList;
+}
 
 function checkInputIsValid(input) {
     return (input != null && input !== '');

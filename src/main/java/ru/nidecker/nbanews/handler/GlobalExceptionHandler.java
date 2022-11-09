@@ -15,7 +15,7 @@ import java.util.Date;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({FieldAlreadyTakenException.class, IllegalStateException.class, WrongPasswordException.class})
-    public ResponseEntity<?> handleFieldAlreadyTaken(FieldAlreadyTakenException exception, WebRequest request) {
+    public ResponseEntity<?> handleFieldAlreadyTaken(Exception exception, WebRequest request) {
         ErrorDetails errorDetails =
                 new ErrorDetails(new Date(), exception.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);

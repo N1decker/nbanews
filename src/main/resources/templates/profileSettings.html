@@ -5,72 +5,104 @@
 <div th:include="/fragments/navbar :: navbar"></div>
 
 <div class="container rounded" id="profileSettings">
-    <div class="row" style="justify-content: center">
-        <div>
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                <img id="avatar" class="rounded-circle mt-5" width="150px" height="150px"
-                     th:src=" ${user.avatar} != null ? *{'data:image/jpeg;base64,'+ user.avatar} : '/images/icons/person-circle.svg'">
-                <br>
-                <button class="btn btn-secondary" id="change-avatar-btn">Change avatar</button>
+    <div class="col">
+        <div class="row" style="justify-content: center">
+            <div>
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img id="avatar" class="rounded-circle mt-5" width="150px" height="150px"
+                         th:src=" ${user.avatar} != null ? *{'data:image/jpeg;base64,'+ user.avatar} : '/images/icons/person-circle.svg'">
+                    <br>
+                    <button class="btn btn-secondary" id="change-avatar-btn">Change avatar</button>
+                </div>
+            </div>
+            <div>
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile Settings</h4>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="labels">Nickname</label>
+                            <div class="input-group">
+                                <input id="profile-nickname-input" name="nickname" type="text" class="form-control"
+                                       th:value="${user.nickname}">
+                                <span class="input-group-append" id="change-nickname-btn" style="display: none">
+                                <button class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5"
+                                        type="button" style="z-index: 0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-check2" viewBox="0 0 16 16">
+                                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                                    </svg>
+                                </button>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Email</label>
+                            <div class="input-group">
+                                <input id="profile-email-input" name="email" type="text" class="form-control"
+                                       th:value="${user.email}">
+                                <span class="input-group-append" id="change-email-btn" style="display: none">
+                                <button class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5"
+                                        type="button" style="z-index: 0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-check2" viewBox="0 0 16 16">
+                                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                                    </svg>
+                                </button>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label class="labels">Current password</label>
+                            <input type="password" id="profile-old-pass-input" class="form-control"
+                                   placeholder="Current password">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">New password</label>
+                            <div class="input-group">
+
+                                <input type="password" b name="new-pass" id="profile-new-pass-input"
+                                       class="form-control"
+                                       placeholder="New password">
+                                <span class="input-group-append" id="change-pass-btn" style="display: none">
+                                <button class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5"
+                                        type="button" style="z-index: 0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-check2" viewBox="0 0 16 16">
+                                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                                    </svg>
+                                </button>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div>
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profile Settings</h4>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label class="labels">Nickname</label>
-                        <div class="input-group">
-                            <input id="profile-nickname-input" name="nickname" type="text" class="form-control" th:value="${user.nickname}">
-                            <span class="input-group-append" id="change-nickname-btn" style="display: none">
-                                <button class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5"
-                                        type="button" style="z-index: 0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-check2" viewBox="0 0 16 16">
-                                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-                                    </svg>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <label class="labels">Email</label>
-                        <div class="input-group">
-                            <input id="profile-email-input" name="email" type="text" class="form-control" th:value="${user.email}">
-                            <span class="input-group-append" id="change-email-btn" style="display: none">
-                                <button class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5"
-                                        type="button" style="z-index: 0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-check2" viewBox="0 0 16 16">
-                                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-                                    </svg>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label class="labels">Current password</label>
-                        <input type="password" id="profile-old-pass-input" class="form-control" placeholder="Current password">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="labels">New password</label>
-                        <div class="input-group">
-
-                        <input type="password"b name="new-pass" id="profile-new-pass-input" class="form-control" placeholder="New password">
-                        <span class="input-group-append" id="change-pass-btn" style="display: none">
-                                <button class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5"
-                                        type="button" style="z-index: 0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-check2" viewBox="0 0 16 16">
-                                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-                                    </svg>
-                                </button>
-                            </span>
+        <div class="row" style="align-content: center; justify-content: center">
+            <div>
+                <button type="button" class="btn btn-danger" id="delete-own-account-btn" style="align-content: center"
+                        data-bs-toggle="modal"
+                        data-bs-target="#delete-own-account"
+                        aria-expanded="false" aria-controls="collapseExample">Delete your own account
+                </button>
+            </div>
+            <div class="modal fade" id="delete-own-account" aria-hidden="true"
+                 tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="text-center split right modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label class="labels" th:text="${'This action cannot be undone. This will permanently delete your account. Please type '+user.email + '/' + user.nickname + ' to confirm'}"></label>
+                                    <input class="form-control" type="text"  id="delete-own-account-confirm-input" th:attr="user-email=${user.email}, user-nickname=${user.nickname}">
+                                </div>
+                            </form>
+                                <button class="btn btn-danger" id="final-delete-own-account-btn" disabled>Delete</button>
                         </div>
                     </div>
                 </div>
