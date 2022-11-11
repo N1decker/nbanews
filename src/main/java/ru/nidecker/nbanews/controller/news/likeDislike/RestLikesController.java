@@ -28,7 +28,7 @@ public class RestLikesController {
     public void changeLikeType(@AuthenticationPrincipal User user,
                                @RequestParam("likeType") int likeType,
                                @RequestParam("newsId") long newsId) {
-        log.info(String.format("change like type to %d in news with id = %d by user %s", likeType, newsId, user));
+        log.info("change like type to {} in news with id = {} by user {}", likeType, newsId, user);
         LikeDislike likeDislike = likeDislikeRepository.getByUserIdAndNewsId(user.getId(), newsId).orElse(new LikeDislike(newsRepository.getReferenceById(newsId), user));
         likeDislike.setLikeType(likeType);
         likeDislikeRepository.save(likeDislike);

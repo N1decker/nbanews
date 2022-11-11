@@ -36,7 +36,7 @@ public class NewsController {
 
     @GetMapping
     public String news(Model model, @AuthenticationPrincipal User user) {
-        log.info(String.format("go to news page by user %s", user));
+        log.info("go to news page by user {}", user);
         model.addAttribute("user", userRepository.findByEmail(user.getEmail()).orElseThrow());
         model.addAttribute("news", newsRepository.findAllByOrderByIdDesc());
         Map<String, LikeDislike> likes = likeDislikeRepository.findAllByUserId(user.getId())
@@ -52,7 +52,7 @@ public class NewsController {
                        @RequestParam("source") String source,
                        @RequestParam("sourceLogo") MultipartFile sourceLogo,
                        @AuthenticationPrincipal User user) {
-        log.info(String.format("save news by user %s", user));
+        log.info("save news by user {}", user);
         newsService.save(title, image, source, sourceLogo, user);
         return "redirect:/news";
     }

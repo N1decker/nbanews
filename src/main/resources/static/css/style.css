@@ -94,7 +94,7 @@ td, th {
     text-align: center;
 }
 
-#isAdmin, #isUser,#isEditor {
+.isAdmin, .isUser,.isEditor {
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -112,4 +112,8 @@ td, th {
     background-color: gray;
     border-radius: 25px;
     color: black;
+}
+
+tr[data-user-enabled="false"] {
+    opacity: 0.3;
 }

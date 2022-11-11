@@ -17,15 +17,10 @@ import ru.nidecker.nbanews.repository.UserRepository;
 public class ProfileController {
     private final UserRepository userRepository;
 
-//    @GetMapping
-//    public String profile() {
-//        return "";
-//    }
-
     @GetMapping("/settings")
     public String profileSettings(Model model,
                                   @AuthenticationPrincipal User user) {
-        log.info(String.format("go to profile settings page by user %s", user));
+        log.info("go to profile settings page by user {}", user);
         model.addAttribute("user", userRepository.findByEmail(user.getEmail()).orElseThrow());
         return "profileSettings";
     }

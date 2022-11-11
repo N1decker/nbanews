@@ -13,31 +13,31 @@ $('.send-msg-btn').on('click', function () {
     let id = $(this).attr('id');
     let url = "/news/" + id + "/comments";
     let message = $('#send-message' + id).val();
-
     if (message) {
         $.ajax({
             url: url,
             type: "POST",
             data: {
                 message, id
+            },
+            success: function (data) {
+
+                $('#send-message' + id).val("");
+                let date = new Date();
+                $("#message-list" + id).append(
+                    "<li class='list-group-item mb-1'>" +
+                    "<div class='row m-0'>" +
+                    "<div>" +
+                    data +
+                    "</div>" +
+                    "<div style='right: 5px; position: absolute; color: grey'>" +
+                    date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() +
+                    "</div>" +
+                    "</div>" +
+                    "<span style='margin-left: 20px'>" + message + "</span>" +
+                    "</li>");
             }
         });
-
-        $('#send-message' + id).val("");
-        // $("#message-list" + id).append("<li class='list-group-item mb-1'>" + message + "</li>");
-        let date = new Date();
-        $("#message-list" + id).append(
-            "<li class='list-group-item mb-1'>" +
-            "<div class='row m-0'>" +
-            "<div>" +
-            //TODO: get user name and comment date
-            "</div>" +
-            "<div style='right: 5px; position: absolute; color: grey'>" +
-            date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() +
-            "</div>" +
-            "</div>" +
-            "<span style='margin-left: 20px'>" + message + "</span>" +
-            "</li>");
     } else {
         warningNotify('type something')
     }
@@ -57,7 +57,6 @@ $('.chat').on('click', function () {
             success: function (data) {
                 let list = "";
                 $.each(data, function (index, item) {
-                    console.log(item)
                     list +=
                         "<li class='list-group-item mb-1'>" +
                         "<div class='row m-0'>" +

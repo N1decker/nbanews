@@ -30,5 +30,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     void deleteUsersByIdIn(List<Long> ids);
 
-
+    @Transactional
+    @Modifying
+    @Query("UPDATE User u SET u.locked = :locked where u.email = :email")
+    void blockUser(String email, boolean locked);
 }

@@ -8,8 +8,10 @@
         <tr th:each="news1 : ${news}">
             <div class="card-container">
                 <div class="card rounded">
-                    <img th:src=" ${news1.image} ? *{'data:image/jpeg;base64,'+news1.image} : ''"
-                         class="card-img-top rounded">
+                    <div th:if="${news1.image}">
+                        <img th:src=" ${news1.image} ? *{'data:image/jpeg;base64,'+news1.image} : ''"
+                            class="card-img-top rounded">
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title" th:text="${news1.title}"></h5>
                         <div th:id="${news1.id}">

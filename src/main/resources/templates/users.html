@@ -10,40 +10,43 @@
             <th scope="col">Id</th>
             <th scope="col">Nickname</th>
             <th scope="col">Email</th>
-            <th scope="col">Enabled</th>
+            <th scope="col">Active</th>
             <th scope="col">Roles</th>
             <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user : ${users}" th:id="${'user' + user.id}">
+        <tr th:each="user : ${users}" th:id="${'user' + user.id}" th:attr="data-user-enabled=${user.locked} ? 'false' : 'true'">
             <td><span th:text="${user.id}">Id</span></td>
             <td><span th:text="${user.nickname}">Nickname</span></td>
-            <td><span th:text="${user.email}">Email</span></td>
+            <td><span th:text="${user.email}" th:attr="user-email=${user.email}">Email</span></td>
             <td>
-                <input class="horizontal-center" type="checkbox" value="" id="enabled"
-                       th:checked="${user.enabled}">
+                <input class="horizontal-center isActive" type="checkbox"
+                       th:checked="${!user.locked}"
+                       th:style="${#request.userPrincipal.getName() == user.email} ? 'pointer-events : none' : ''">
             </td>
             <td>
                 <div class="row">
-                    <input class="horizontal-center" type="checkbox" value="" id="isUser"
+                    <input class="horizontal-center isUser" type="checkbox"
                            th:checked="${user.isUser}">
-                    <label class="form-check-label" for="isUser">USER</label>
+                    <label class="form-check-label">USER</label>
                 </div>
                 <div class="row">
-                    <input class="horizontal-center" type="checkbox" value="" id="isAdmin"
+                    <input class="horizontal-center isAdmin" type="checkbox"
                            th:checked="${user.isAdmin}">
-                    <label class="form-check-label" for="isAdmin">ADMIN</label>
+                    <label class="form-check-label">ADMIN</label>
                 </div>
                 <div class="row">
-                    <input class="horizontal-center" type="checkbox" value="" id="isEditor"
+                    <input class="horizontal-center isEditor" type="checkbox"
                            th:checked="${user.isEditor}">
-                    <label class="form-check-label" for="isEditor">EDITOR</label>
+                    <label class="form-check-label">EDITOR</label>
                 </div>
             </td>
-            <td th:if="${#request.userPrincipal.getName() != user.email}"><span>
-                <button class="btn btn-danger delete-user-btn"> Delete</button>
-            </span></td>
+            <td th:if="${#request.userPrincipal.getName() != user.email}">
+                <span>
+                    <button class="btn btn-danger delete-user-btn"> Delete</button>
+                </span>
+            </td>
         </tr>
         </tbody>
     </table>

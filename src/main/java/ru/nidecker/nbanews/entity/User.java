@@ -49,6 +49,7 @@ public class User implements UserDetails {
     @ToString.Exclude
     private String password;
 
+    @ToString.Exclude
     private String avatar;
 
     private boolean enabled;

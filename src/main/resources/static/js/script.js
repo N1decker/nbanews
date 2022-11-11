@@ -50,19 +50,6 @@ function signIn(email, password) {
     });
 }
 
-function warningNotify(text) {
-    toastr.options = {
-        positionClass: 'toast-bottom-right'
-    }
-    toastr['warning'](text)
-}
-
-function successNotify(text) {
-    toastr.options = {
-        positionClass: 'toast-bottom-right'
-    }
-    toastr['success'](text)
-}
 
 $('#signUp-form-btn').on('click', function () {
     let nickname = $('#nicknameSignUpInput').val();
@@ -76,9 +63,6 @@ $('#signUp-form-btn').on('click', function () {
     });
 
     if (checkInputIsValid(email) && checkInputIsValid(password) && checkInputIsValid(nickname)) {
-    // if (email != null && email !== '' &&
-    //     nickname != null && nickname !== '' &&
-    //     password != null && password !== '') {
         $.ajax({
             url: "/api/v1/registration",
             method: "POST",
@@ -156,6 +140,29 @@ function errorNotifyRightOfTheInputField(inputField, text) {
     })
 }
 
+function warningNotify(text) {
+    toastr.options = {
+        "progressBar": true,
+        "timeOut": "3000",
+        "positionClass": 'toast-bottom-right'
+    }
+    toastr['warning'](text)
+}
+
+function successNotify(text) {
+    toastr.options = {
+        "progressBar": true,
+        "timeOut": "3000",
+        "positionClass": 'toast-bottom-right'
+    }
+    toastr['success'](text)
+}
+
 $('#temp-mail-redirect').click(function () {
     window.open('https://temp-mail.org/', '_blank')
 });
+
+$('a.source-logo').click(function (e) {
+    e.preventDefault()
+    window.open(this.href, '_blank')
+})

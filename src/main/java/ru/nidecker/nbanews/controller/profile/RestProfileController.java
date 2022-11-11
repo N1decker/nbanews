@@ -70,11 +70,11 @@ public class RestProfileController {
     public void changePassword(@AuthenticationPrincipal User auth,
                                @RequestParam("oldPassword") String oldPassword,
                                @RequestParam("newPassword") String newPassword) {
-        log.info(String.format("trying to change password by user %s", auth));
+        log.info("trying to change password by user {}", auth);
         if (auth.getEmail().equals("admin@gmail.com") || auth.getEmail().equals("user@gmail.com")) {
             throw new IllegalStateException("you cannot change this user's data");
         } else {
-            log.info(String.format("change password by user %s", auth));
+            log.info("change password by user {}", auth);
             User user = userRepository.findById(auth.getId()).orElseThrow();
             if (!bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
                 throw new WrongPasswordException("wrong old password");
@@ -90,7 +90,7 @@ public class RestProfileController {
     @PostMapping("/change-avatar")
     public void changeAvatar(@AuthenticationPrincipal User auth,
                              @RequestParam("avatar") MultipartFile avatar) {
-        log.info(String.format("change avatar by user %s", auth));
+        log.info("change avatar by user {}", auth);
         User user = userRepository.findById(auth.getId()).orElseThrow();
         try {
             user.setAvatar(Base64.getEncoder().encodeToString(avatar.getBytes()));
@@ -102,11 +102,11 @@ public class RestProfileController {
     @DeleteMapping
     @Transactional
     public void deleteProfile(@AuthenticationPrincipal User user) {
-        log.info(String.format("trying to delete profile by user %s", user));
+        log.info("trying to delete profile by user {}", user);
         if (user.getEmail().equals("admin@gmail.com") || user.getEmail().equals("user@gmail.com")) {
             throw new IllegalStateException("you cannot delete this user");
         } else {
-            log.info(String.format("delete user %s", user));
+            log.info("delete user {}", user);
             userRepository.delete(user);
         }
     }

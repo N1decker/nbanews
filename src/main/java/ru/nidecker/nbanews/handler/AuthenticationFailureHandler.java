@@ -16,20 +16,25 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
+    private static final String WRONG_PASSWORD_MSG = "You entered the wrong password";
+
+    public static final String BLOCKED_ACCOUNT_MSG = "Your account is blocked, you can find out the reason for blocking by writing to this email address: nb4news@gmail.com and maybe we will unblock your account";
+
+    public static final String USER_NOT_FOUND_MSG = "There is no such user";
     private final UserRepository userRepository;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
-        StringBuilder builder = new StringBuilder();
         String email = request.getParameter("username");
         String password = request.getParameter("password");
         User user = userRepository.findByEmail(email).orElse(null);
-        if (user != null && !bCryptPasswordEncoder.matches(password, user.getPassword())) {
-//        response.sendError(401, "Authentication Failed: " + exception.getMessage());
-            response.sendError(401, "You entered the wrong password");
+        if (user != null && user.isLocked()) {
+            response.sendError(401, BLOCKED_ACCOUNT_MSG);
+        } else if (user != null && !bCryptPasswordEncoder.matches(password, user.getPassword())) {
+            response.sendError(401, WRONG_PASSWORD_MSG);
         } else if (user == null) {
-            response.sendError(401, "There is no such user");
+            response.sendError(401, USER_NOT_FOUND_MSG);
         }
     }
 }
