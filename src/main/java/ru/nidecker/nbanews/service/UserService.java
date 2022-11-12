@@ -67,12 +67,13 @@ public class UserService implements UserDetailsService {
         userRepository.enableUser(email);
     }
 
+    @Transactional
     public void deleteUser(long id,
                            User auth) {
         if (!auth.getRoles().contains(Role.ADMIN)) {
             throw new IllegalStateException("You don't have privileges");
         } else {
-            log.info("trying to delete user with id = {}", id);
+            log.info("attempt to delete user with id = {}", id);
             User user = userRepository.findById(id).orElseThrow();
             if (user.getNickname().equals("User") ||
                     user.getNickname().equals("Admin") ||
@@ -85,12 +86,12 @@ public class UserService implements UserDetailsService {
             }
         }
     }
-
+    @Transactional
     public void blockUser(long id, boolean locked, User auth) {
         if (!auth.getRoles().contains(Role.ADMIN)) {
             throw new IllegalStateException("You don't have privileges");
         } else {
-            log.info("trying to change the user's lock with id = {}", id);
+            log.info("attempt to change the user's lock with id = {}", id);
             User user = userRepository.findById(id).orElseThrow();
             if (user.getNickname().equals("User") ||
                     user.getNickname().equals("Admin") ||
@@ -104,10 +105,11 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    @Transactional
     public void changeProfileFields(User user,
                                     String inputType,
                                     String changeTo) {
-        log.info(String.format("trying to change profile data by user %s", user));
+        log.info(String.format("attempt to change profile data by user %s", user));
         if (user.getEmail().equals("admin@gmail.com") || user.getEmail().equals("user@gmail.com")) {
             throw new IllegalStateException("You cannot change this user's data");
         } else {
@@ -141,10 +143,11 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    @Transactional
     public void changePassword(User auth,
                                String oldPassword,
                                String newPassword) {
-        log.info("trying to change password by user {}", auth);
+        log.info("attempt to change password by user {}", auth);
         if (auth.getEmail().equals("admin@gmail.com") || auth.getEmail().equals("user@gmail.com")) {
             throw new IllegalStateException("You cannot change this user's data");
         } else {
@@ -161,6 +164,7 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    @Transactional
     public void changeAvatar(User auth,
                              MultipartFile avatar) {
         log.info("change avatar by user {}", auth);
@@ -173,7 +177,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void deleteProfile(User user) {
-        log.info("trying to delete profile by user {}", user);
+        log.info("attempt to delete profile by user {}", user);
         if (user.getEmail().equals("admin@gmail.com") || user.getEmail().equals("user@gmail.com")) {
             throw new IllegalStateException("you cannot delete this user");
         } else {

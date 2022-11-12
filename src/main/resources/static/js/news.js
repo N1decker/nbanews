@@ -105,3 +105,23 @@ $(function () {
         }
     });
 })
+
+$('.delete-news-btn').on('click', function () {
+    let newsId = $(this).closest('.card-container').attr('id').substring(4)
+    if (confirm('Are you sure?')) {
+    $(this).closest('.card-container').fadeOut(1000)
+        $.ajax({
+            url: '/api/news/' + newsId,
+            type: 'DELETE',
+            data: {
+                'newsId': newsId
+            },
+            success: function () {
+                successNotify('news successfully deleted')
+            },
+            error: function (xhr) {
+                warningNotify(parseMessageToUnorderedListByOneDotForNotify(JSON.parse(xhr.responseText)['message']))
+            }
+        });
+    }
+})

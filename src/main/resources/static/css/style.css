@@ -117,3 +117,11 @@ td, th {
 tr[data-user-enabled="false"] {
     opacity: 0.3;
 }
+
+div.card-container:hover .delete-news-btn {
+    opacity: 1;
+}
+
+.delete-news-btn {
+    opacity: 0;
+}

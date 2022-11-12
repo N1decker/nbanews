@@ -1,5 +1,6 @@
 package ru.nidecker.nbanews.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,7 @@ import java.util.Base64;
 import java.util.Objects;
 
 @Service
+@Slf4j
 public class NewsService {
 
     private final NewsRepository newsRepository;
@@ -31,11 +33,19 @@ public class NewsService {
                 news.setSourceLogo(Base64.getEncoder().encodeToString(sourceLogo.getBytes()));
             } catch (Exception ignored) {
             }
-
             news.setEditor(user.getNickname());
             news.setTitle(title);
             news.setSource(source);
             return newsRepository.save(news);
+        }
+    }
+
+    public void delete(long id, User user) {
+        log.info("attempt to delete news with id {} by user {}", id, user);
+        if (!user.getRoles().contains(Role.EDITOR)) {
+            throw new IllegalStateException("You don't have privileges");
+        } else {
+            newsRepository.deleteById(id);
         }
     }
 }

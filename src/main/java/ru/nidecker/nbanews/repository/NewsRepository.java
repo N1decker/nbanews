@@ -8,4 +8,6 @@ import java.util.List;
 public interface NewsRepository extends JpaRepository<News, Long> {
 
     List<News> findAllByOrderByIdDesc();
+
+    void deleteById(long id);
 }
