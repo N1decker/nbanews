@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class MainController {
-
     @GetMapping
     public String main() {
         return "index";

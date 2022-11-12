@@ -16,7 +16,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user : ${users}" th:id="${'user' + user.id}" th:attr="data-user-enabled=${user.locked} ? 'false' : 'true'">
+        <tr th:each="user : ${users}" th:id="${'user' + user.id}"
+            th:attr="data-user-enabled=${user.locked} ? 'false' : 'true'">
             <td><span th:text="${user.id}">Id</span></td>
             <td><span th:text="${user.nickname}">Nickname</span></td>
             <td><span th:text="${user.email}" th:attr="user-email=${user.email}">Email</span></td>
@@ -28,17 +29,17 @@
             <td>
                 <div class="row">
                     <input class="horizontal-center isUser" type="checkbox"
-                           th:checked="${user.isUser}">
+                           checked style="pointer-events: none">
                     <label class="form-check-label">USER</label>
                 </div>
                 <div class="row">
                     <input class="horizontal-center isAdmin" type="checkbox"
-                           th:checked="${user.isAdmin}">
+                           th:checked="${user.isAdmin}" style="pointer-events: none">
                     <label class="form-check-label">ADMIN</label>
                 </div>
                 <div class="row">
                     <input class="horizontal-center isEditor" type="checkbox"
-                           th:checked="${user.isEditor}">
+                           th:checked="${user.isEditor}" style="pointer-events: none">
                     <label class="form-check-label">EDITOR</label>
                 </div>
             </td>

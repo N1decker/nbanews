@@ -1,9 +1,10 @@
-package ru.nidecker.nbanews.registration.token;
+package ru.nidecker.nbanews.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
+import ru.nidecker.nbanews.entity.ConfirmationToken;
 
 import java.time.LocalDateTime;
 import java.util.List;

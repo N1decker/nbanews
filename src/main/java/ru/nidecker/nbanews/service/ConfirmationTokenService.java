@@ -1,7 +1,9 @@
-package ru.nidecker.nbanews.registration.token;
+package ru.nidecker.nbanews.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.nidecker.nbanews.entity.ConfirmationToken;
+import ru.nidecker.nbanews.repository.ConfirmationTokenRepository;
 
 import java.time.LocalDateTime;
 import java.util.Optional;

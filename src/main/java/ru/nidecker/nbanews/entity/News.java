@@ -1,16 +1,13 @@
 package ru.nidecker.nbanews.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.Hibernate;
-import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
@@ -28,30 +25,33 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotBlank
+    @NotBlank
     private String title;
     private String image;
-//    @NotBlank
+
+    @NotBlank
     private String source;
-//    @NotNull
+
+    @NotNull
     private String sourceLogo;
-//    @NotNull
+
+    @NotNull
     private LocalDate newsDate = LocalDate.now();
 
+    @NotNull
     private LocalTime newsTime = LocalTime.now().truncatedTo(TimeUnit.MINUTES.toChronoUnit());
 
+    @NotBlank
     private String editor;
-//    @NotBlank
-//    @ManyToOne
-//    @JsonBackReference
-//    private User editor;
 
     @OneToMany(orphanRemoval = true, mappedBy = "news", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonBackReference
+    @ToString.Exclude
     private List<Comment> comments;
 
     @OneToMany(orphanRemoval = true, mappedBy = "news", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonBackReference
+    @ToString.Exclude
     private List<LikeDislike> likeDislikes;
 
     @Override

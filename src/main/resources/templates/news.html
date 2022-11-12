@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:include="/fragments/header :: header"></head>
 <body>
 <div th:include="/fragments/navbar :: navbar"></div>
@@ -10,7 +10,7 @@
                 <div class="card rounded">
                     <div th:if="${news1.image}">
                         <img th:src=" ${news1.image} ? *{'data:image/jpeg;base64,'+news1.image} : ''"
-                            class="card-img-top rounded">
+                             class="card-img-top rounded">
                     </div>
                     <div class="card-body">
                         <h5 class="card-title" th:text="${news1.title}"></h5>
@@ -86,22 +86,23 @@
         <div>
             <div>
                 <div class="row">
-                    <div class="mr-1">
-                        <div class="input-group">
-                            <input class="form-control border-end-0 border rounded" type="search" placeholder="Search"
-                                   id="news-search-input">
-                            <span class="input-group-append">
-                                <button class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5"
-                                        type="button" style="z-index: 0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         class="bi bi-search" viewBox="0 0 16 16">
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                    </svg>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <div>
+                    <!--                    It's search input-->
+                    <!--                    <div class="mr-1">-->
+                    <!--                        <div class="input-group">-->
+                    <!--                            <input class="form-control border-end-0 border rounded" type="search" placeholder="Search"-->
+                    <!--                                   id="news-search-input">-->
+                    <!--                            <span class="input-group-append">-->
+                    <!--                                <button class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5"-->
+                    <!--                                        type="button" style="z-index: 0">-->
+                    <!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
+                    <!--                                         class="bi bi-search" viewBox="0 0 16 16">-->
+                    <!--                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>-->
+                    <!--                                    </svg>-->
+                    <!--                                </button>-->
+                    <!--                            </span>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <div sec:authorize="hasRole('EDITOR')">
                         <button type="button" class="btn" style="background: #5ce1e6" id="addNewsBtn"
                                 data-bs-toggle="modal"
                                 data-bs-target="#addNews"

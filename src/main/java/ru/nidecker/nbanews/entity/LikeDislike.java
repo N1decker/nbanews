@@ -7,6 +7,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -21,11 +22,15 @@ public class LikeDislike {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @ManyToOne
+    @JoinColumn
     @JsonIgnoreProperties(value = {"title", "image", "source", "sourceLogo"})
     private News news;
 
+    @NotNull
     @ManyToOne
+    @JoinColumn
     @JsonIgnoreProperties(value = {"password", "roles"})
     @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     private User user;

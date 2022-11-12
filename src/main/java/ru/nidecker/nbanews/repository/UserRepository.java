@@ -3,14 +3,15 @@ package ru.nidecker.nbanews.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nidecker.nbanews.entity.User;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Transactional(readOnly = true)
+@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
@@ -20,7 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Modifying
     @Query("UPDATE User u SET u.enabled = true WHERE u.email = :email")
-    int enableUser(String email);
+    void enableUser(String email);
 
     @Modifying
     @Query("UPDATE User u SET u.password = :password WHERE u.email = :email")

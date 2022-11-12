@@ -12,7 +12,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.nidecker.nbanews.registration.token.ConfirmationToken;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:include="/fragments/header :: header"></head>
 <body>
 <div>
@@ -13,15 +13,21 @@
                aria-controls="collapseExample">
                 Sign up
             </a>
+            <a class="btn btn-primary mr-1" role="button" onclick="signIn('superadmin@admin.ru','zZWeFA85*um&+J)9')">
+                Login as SuperAdmin
+            </a>
             <a class="btn btn-primary mr-1" role="button" onclick="signIn('admin@gmail.com','gSKkf@%rM^@(Mqhx')">
                 Login as Admin
             </a>
-            <!--            <a class="btn btn-primary mr-1" role="button" onclick="signIn('user@yandex.com', 'user')">-->
-            <!--                Login as User-->
-            <!--            </a>-->
+            <a class="btn btn-primary mr-1" role="button" onclick="signIn('user@yandex.com', 'NLFyP(uMrwq5A^jc')">
+                Login as User
+            </a>
+            <a class="btn btn-primary mr-1" role="button" onclick="signIn('editor@yahoo.com', '^VVQu#6XRxeQjV8C')">
+                Login as Editor
+            </a>
         </div>
         <div>
-            <form id="loginForm" class="form-signIn form-inline">
+            <form id="loginForm" class="form-signIn form-inline" sec:authorize="isAnonymous()">
                 <input type="text" class="form-control mr-1" placeholder="Email" name="username" id="username" required>
                 <input type="password" class="form-control mr-1" placeholder="Password" name="password" id="password"
                        required>
@@ -35,6 +41,9 @@
                     </svg>
                 </button>
             </form>
+            <button class="btn btn-primary mr-1" id="return-back-btn" sec:authorize="isAuthenticated()" onclick="window.history.back()">
+                Return back
+            </button>
         </div>
     </div>
 </div>
@@ -52,8 +61,8 @@
                             <div class="input-group">
                                 <input type="email" class="form-control" id="emailSignUpInput"
                                        aria-describedby="emailHelp" placeholder="Email address">
-                                    <span class="input-group-append">
-                                        <button type="button" id="temp-mail-redirect" href=""
+                                <span class="input-group-append">
+                                        <button type="button" id="temp-mail-redirect"
                                                 class="btn btn-outline-secondary bg-white  border rounded-pill ms-n5">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                  fill="currentColor" class="bi bi-info-lg" viewBox="0 0 16 16">
@@ -65,7 +74,7 @@
                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
                         <div class="mb-3">
-                            <input type="password" class="form-control" id="passwordSignUpInput" placeholder="Password" >
+                            <input type="password" class="form-control" id="passwordSignUpInput" placeholder="Password">
                         </div>
                         <button type="button" id="signUp-form-btn" class="btn btn-primary">Sign up</button>
                     </form>

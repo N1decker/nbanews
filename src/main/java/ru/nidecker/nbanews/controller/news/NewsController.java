@@ -52,7 +52,6 @@ public class NewsController {
                        @RequestParam("source") String source,
                        @RequestParam("sourceLogo") MultipartFile sourceLogo,
                        @AuthenticationPrincipal User user) {
-        log.info("save news by user {}", user);
         newsService.save(title, image, source, sourceLogo, user);
         return "redirect:/news";
     }
