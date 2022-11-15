@@ -1,4 +1,4 @@
-package ru.nidecker.nbanews.controller;
+package ru.nidecker.nbanews.web;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

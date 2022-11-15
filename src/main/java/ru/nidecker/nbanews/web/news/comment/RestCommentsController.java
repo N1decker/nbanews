@@ -1,29 +1,24 @@
-package ru.nidecker.nbanews.controller.news.comment;
+package ru.nidecker.nbanews.web.news.comment;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ru.nidecker.nbanews.entity.Comment;
 import ru.nidecker.nbanews.entity.User;
-import ru.nidecker.nbanews.repository.NewsRepository;
 import ru.nidecker.nbanews.repository.CommentRepository;
+import ru.nidecker.nbanews.repository.NewsRepository;
 
 import java.util.List;
-import java.util.Optional;
 
-@RestController
-@RequestMapping("/news")
 @Slf4j
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/news")
 public class RestCommentsController {
     private final NewsRepository newsRepository;
     private final CommentRepository newsUserRelationshipRepository;
-
-    public RestCommentsController(NewsRepository newsRepository, CommentRepository newsUserRelationshipRepository) {
-        this.newsRepository = newsRepository;
-        this.newsUserRelationshipRepository = newsUserRelationshipRepository;
-    }
 
     @GetMapping("/{id}/comments")
     public List<Comment> getAll(@PathVariable long id) {

@@ -14,7 +14,7 @@ import java.util.Date;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({FieldAlreadyTakenException.class, IllegalStateException.class, WrongPasswordException.class})
+    @ExceptionHandler({FieldAlreadyTakenException.class, IllegalStateException.class, IllegalArgumentException.class, WrongPasswordException.class})
     public ResponseEntity<?> handleFieldAlreadyTaken(Exception exception, WebRequest request) {
         ErrorDetails errorDetails =
                 new ErrorDetails(new Date(), exception.getMessage(), request.getDescription(false));

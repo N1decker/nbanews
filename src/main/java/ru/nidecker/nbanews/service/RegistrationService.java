@@ -5,12 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nidecker.nbanews.dto.RegistrationRequest;
 import ru.nidecker.nbanews.entity.ConfirmationToken;
-import ru.nidecker.nbanews.service.ConfirmationTokenService;
-import ru.nidecker.nbanews.util.email.EmailSender;
 import ru.nidecker.nbanews.entity.Role;
 import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.exception.WrongPasswordException;
-import ru.nidecker.nbanews.service.UserService;
+import ru.nidecker.nbanews.util.email.EmailSender;
 import ru.nidecker.nbanews.util.validation.EmailValidator;
 import ru.nidecker.nbanews.util.validation.PasswordValidator;
 
@@ -21,13 +19,13 @@ import java.util.Set;
 @AllArgsConstructor
 public class RegistrationService {
     private final UserService userService;
-    private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
+    private final ConfirmationTokenService confirmationTokenService;
 
-    public void register(RegistrationRequest request) {
+    public boolean register(RegistrationRequest request) {
         boolean isValidEmail = EmailValidator.validate(request.getEmail());
         if (!isValidEmail)
-            throw new IllegalStateException("email not valid");
+            throw new IllegalArgumentException("email not valid");
 
         String invalidPasswordMessage = PasswordValidator.isValidPassword(request.getPassword());
         if (invalidPasswordMessage != null)
@@ -45,6 +43,7 @@ public class RegistrationService {
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getNickname(), link));
+        return true;
     }
 
     @Transactional
@@ -52,15 +51,15 @@ public class RegistrationService {
         ConfirmationToken confirmationToken = confirmationTokenService
                 .getToken(token)
                 .orElseThrow(() ->
-                        new IllegalStateException("token not found"));
+                        new IllegalArgumentException("token not found"));
 
         if (confirmationToken.getConfirmedAt() != null)
-            throw new IllegalStateException("email already confirmed");
+            throw new IllegalArgumentException("email already confirmed");
 
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
 
         if (expiredAt.isBefore(LocalDateTime.now()))
-            throw new IllegalStateException("token expired");
+            throw new IllegalArgumentException("token expired");
 
         confirmationTokenService.setConfirmedAt(token);
         userService.enableUser(confirmationToken.getUser().getEmail());

@@ -28,6 +28,8 @@ spring:
           auth: true
           starttls:
             enable: true
+  liquibase:
+    enabled: false
 server:
   error:
     include-message: always

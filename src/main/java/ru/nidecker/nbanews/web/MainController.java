@@ -1,4 +1,4 @@
-package ru.nidecker.nbanews.controller;
+package ru.nidecker.nbanews.web;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;

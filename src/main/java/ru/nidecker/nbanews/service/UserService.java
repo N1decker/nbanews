@@ -45,7 +45,7 @@ public class UserService implements UserDetailsService {
     public String signUpUser(User user) {
         boolean userExists = userRepository.findByEmail(user.getEmail())
                 .isPresent();
-        if (userExists) throw new IllegalStateException("email already taken");
+        if (userExists) throw new IllegalArgumentException("email already taken");
 
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
@@ -59,7 +59,6 @@ public class UserService implements UserDetailsService {
                 user
         );
         confirmationTokenService.save(confirmationToken);
-
         return token;
     }
 
@@ -79,7 +78,7 @@ public class UserService implements UserDetailsService {
                     user.getNickname().equals("Admin") ||
                     user.getNickname().equals("SuperAdmin") ||
                     user.getNickname().equals("Editor") ) {
-                throw new IllegalStateException("You cannot delete this user");
+                throw new IllegalArgumentException("You cannot delete this user");
             } else {
                 log.info("delete user with id = {}", id);
                 userRepository.delete(user);

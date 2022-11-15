@@ -1,4 +1,4 @@
-package ru.nidecker.nbanews.controller.admin;
+package ru.nidecker.nbanews.web.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
