@@ -170,3 +170,7 @@ $('a.source-logo').click(function (e) {
 $('#return-back-btn').on('click', function () {
     window.history.back()
 })
+
+$('.contacts').on('click', function () {
+    window.open($(this).attr('href'), '_blank')
+})
