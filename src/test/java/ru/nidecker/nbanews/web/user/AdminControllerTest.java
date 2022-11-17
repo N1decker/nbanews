@@ -10,6 +10,8 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.nidecker.nbanews.AbstractTest;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class AdminControllerTest extends AbstractTest {
@@ -29,21 +31,28 @@ class AdminControllerTest extends AbstractTest {
     @Test
     @WithUserDetails(value = USER_DETAILS, userDetailsServiceBeanName = "userService")
     void usersPageForbidden() throws Exception {
-        perform(MockMvcRequestBuilders.get(USERS))
+        perform(get(USERS))
                 .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithUserDetails(value = ADMIN_DETAILS, userDetailsServiceBeanName = "userService")
+    void userPageByAdmin() throws Exception {
+        perform(get(USERS))
+                .andExpect(status().isOk());
     }
 
     @Test
     @WithUserDetails(value = USER_DETAILS, userDetailsServiceBeanName = "userService")
     void deleteUserForbidden() throws Exception {
-        perform(MockMvcRequestBuilders.post(REST_URL + Mockito.anyInt()))
+        perform(post(REST_URL + Mockito.anyInt()))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     @WithUserDetails(value = USER_DETAILS, userDetailsServiceBeanName = "userService")
     void blockUserForbidden() throws Exception {
-        perform(MockMvcRequestBuilders.post(REST_URL + Mockito.anyInt() + "/block"))
+        perform(post(REST_URL + Mockito.anyInt() + "/block"))
                 .andExpect(status().isForbidden());
     }
 
