@@ -7,18 +7,18 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.nidecker.nbanews.AbstractTest;
+
+import java.util.Random;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class AdminControllerTest extends AbstractTest {
-
+    public static final long ANY_NEWS_ID = new Random().nextLong();
     public static final String USER_DETAILS = "user@yandex.ru";
     public static final String ADMIN_DETAILS = "admin@gmail.com";
-
     private static final String USERS = "/users";
     public static final String REST_URL = "/api/admin/users/";
     @Autowired
@@ -45,14 +45,14 @@ class AdminControllerTest extends AbstractTest {
     @Test
     @WithUserDetails(value = USER_DETAILS, userDetailsServiceBeanName = "userService")
     void deleteUserForbidden() throws Exception {
-        perform(post(REST_URL + Mockito.anyInt()))
+        perform(post(REST_URL + ANY_NEWS_ID))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     @WithUserDetails(value = USER_DETAILS, userDetailsServiceBeanName = "userService")
     void blockUserForbidden() throws Exception {
-        perform(post(REST_URL + Mockito.anyInt() + "/block"))
+        perform(post(REST_URL + ANY_NEWS_ID + "/block"))
                 .andExpect(status().isForbidden());
     }
 

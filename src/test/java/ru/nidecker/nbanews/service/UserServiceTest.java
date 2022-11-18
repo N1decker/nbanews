@@ -1,13 +1,11 @@
 package ru.nidecker.nbanews.service;
 
 import org.assertj.core.internal.bytebuddy.utility.RandomString;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 import ru.nidecker.nbanews.AbstractTest;
 import ru.nidecker.nbanews.entity.Role;
 import ru.nidecker.nbanews.entity.User;
@@ -18,8 +16,9 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+
 public class UserServiceTest extends AbstractTest {
 
     private static final long NOT_FOUND_USER_ID = 1;
@@ -35,48 +34,55 @@ public class UserServiceTest extends AbstractTest {
     @MockBean
     private ConfirmationTokenService confirmationTokenService;
 
-    @Test(expected = IllegalArgumentException.class)
-    public void signUpWithExistsEmail() {
+    @Test
+    void signUpWithExistsEmail() {
+        String email = RandomString.make(RandomString.DEFAULT_LENGTH);
         User user = new User();
-        user.setEmail(Mockito.anyString());
+        user.setEmail(email);
         Mockito.when(userRepository
-                        .findByEmail(user.getEmail()))
+                        .findByEmail(email))
                 .thenReturn(Optional.of(user));
 
-        userService.signUpUser(user);
+        assertThrows(IllegalArgumentException.class,
+                () -> userService.signUpUser(user));
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void deleteUserByNotAdmin() {
+    @Test
+    void deleteUserByNotAdmin() {
         User auth = new User();
         auth.setRoles(Set.of(Role.USER));
-        userService.deleteUser(ANY_USER_ID, auth);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> userService.deleteUser(ANY_USER_ID, auth));
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void deleteNotFoundUser() {
+    @Test
+    void deleteNotFoundUser() {
         User auth = new User();
         auth.setRoles(Set.of(Role.ADMIN));
-        userService.deleteUser(NOT_FOUND_USER_ID, auth);
+
+        assertThrows(NoSuchElementException.class,
+                () -> userService.deleteUser(NOT_FOUND_USER_ID, auth));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void deleteAdmin() {
+    @Test
+    void deleteAdmin() {
         User auth = new User();
         auth.setRoles(Set.of(Role.ADMIN));
         Mockito.when(userRepository.findById(Mockito.anyLong()))
                 .thenReturn(Optional.of(new User(
-                        RandomString.make(),
+                        "Admin",
                         RandomString.make(),
                         RandomString.make(),
                         Set.of(Role.ADMIN)
                 )));
 
-        userService.deleteUser(Mockito.anyLong(), auth);
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> userService.deleteUser(Mockito.anyLong(), auth));
     }
 
     @Test
-    public void deleteUser() {
+    void deleteUser() {
         User auth = new User();
         auth.setRoles(Set.of(Role.ADMIN));
         User randomUser = new User(
@@ -92,5 +98,4 @@ public class UserServiceTest extends AbstractTest {
 
         Mockito.verify(userRepository, Mockito.times(1)).delete(randomUser);
     }
-
 }

@@ -1,12 +1,10 @@
 package ru.nidecker.nbanews.service;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 import ru.nidecker.nbanews.AbstractTest;
 import ru.nidecker.nbanews.dto.RegistrationRequest;
 import ru.nidecker.nbanews.entity.ConfirmationToken;
@@ -20,11 +18,8 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class RegistrationServiceTest extends AbstractTest {
 
     @MockBean
@@ -46,33 +41,54 @@ public class RegistrationServiceTest extends AbstractTest {
     private RegistrationService registrationService;
 
     @Test
-    public void register() {
-        RegistrationRequest request = new RegistrationRequest("newUser", "validemail@test.com", "Val1d!Pass{");
-        assertTrue(registrationService.register(request));
+    void register() {
+        RegistrationRequest request =
+                new RegistrationRequest(
+                        "newUser",
+                        "validemail@test.com",
+                        "Val1d!Pass{"
+                );
+        Assertions.assertTrue(registrationService.register(request));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void registerWithInvalidEmail() {
-        RegistrationRequest request = new RegistrationRequest("", "invalid_email", "");
-        registrationService.register(request);
+    @Test
+    void registerWithInvalidEmail() {
+        RegistrationRequest request =
+                new RegistrationRequest(
+                        "",
+                        "invalid_email",
+                        ""
+                );
+
+        assertThrows(IllegalArgumentException.class,
+                () -> registrationService.register(request));
     }
 
-    @Test(expected = WrongPasswordException.class)
-    public void registerWithInvalidPassword() {
-        RegistrationRequest request = new RegistrationRequest("", "test@gmail.com", "invalid_pass");
-        registrationService.register(request);
+    @Test
+    void registerWithInvalidPassword() {
+        RegistrationRequest request =
+                new RegistrationRequest(
+                        "",
+                        "test@gmail.com",
+                        "invalid_pass"
+                );
+
+        Assertions.assertThrows(WrongPasswordException.class,
+                () -> registrationService.register(request));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void confirmTokenWithEmptyToken() {
+    @Test
+    void confirmTokenWithEmptyToken() {
         String token = UUID.randomUUID().toString();
-        registrationService.confirmToken(token);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> registrationService.confirmToken(token));
 
         Mockito.verify(confirmationTokenService, Mockito.times(1)).getToken(token);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void confirmTokenMethodWithConfirmedToken() {
+    @Test
+    void confirmTokenMethodWithConfirmedToken() {
         String token = UUID.randomUUID().toString();
         ConfirmationToken confirmationToken = new ConfirmationToken();
         confirmationToken.setConfirmedAt(LocalDateTime.now().minusMinutes(1));
@@ -81,11 +97,12 @@ public class RegistrationServiceTest extends AbstractTest {
                 .when(confirmationTokenService)
                 .getToken(Mockito.anyString());
 
-        registrationService.confirmToken(token);
+        assertThrows(IllegalArgumentException.class,
+                () -> registrationService.confirmToken(token));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void confirmTokenMethodWithExpiredToken() {
+    @Test
+    void confirmTokenMethodWithExpiredToken() {
         String token = UUID.randomUUID().toString();
         ConfirmationToken confirmationToken = new ConfirmationToken();
         confirmationToken.setExpiresAt(LocalDateTime.now().minusMinutes(1));
@@ -94,7 +111,8 @@ public class RegistrationServiceTest extends AbstractTest {
                 .when(confirmationTokenService)
                 .getToken(Mockito.anyString());
 
-        registrationService.confirmToken(token);
+        assertThrows(IllegalArgumentException.class,
+                () -> registrationService.confirmToken(token));
     }
 
     @Test
@@ -125,6 +143,6 @@ public class RegistrationServiceTest extends AbstractTest {
         Mockito.verify(confirmationTokenService, Mockito.times(1)).setConfirmedAt(token);
         Mockito.verify(userService, Mockito.times(1)).enableUser(confirmationToken.getUser().getEmail());
 
-        assertSame("confirmed", resultOfConfirmToken);
+        Assertions.assertSame("confirmed", resultOfConfirmToken);
     }
 }

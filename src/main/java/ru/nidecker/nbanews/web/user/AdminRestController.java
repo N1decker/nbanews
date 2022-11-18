@@ -18,15 +18,15 @@ public class AdminRestController {
 
     private final UserService userService;
 
-    @DeleteMapping("/{id}")
     @Transactional
+    @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable long id,
                            @AuthenticationPrincipal User auth) {
         userService.deleteUser(id, auth);
     }
 
-    @PostMapping("/{id}/block")
     @Transactional
+    @PostMapping("/{id}/block")
     public void blockUser(@PathVariable long id,
                           @RequestParam("locked") boolean locked,
                           @AuthenticationPrincipal User auth) {

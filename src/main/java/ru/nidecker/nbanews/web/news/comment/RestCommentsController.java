@@ -26,11 +26,11 @@ public class RestCommentsController {
         return newsUserRelationshipRepository.findAllByNewsId(id);
     }
 
-    @PostMapping("/{id}/comments")
     @Transactional
+    @PostMapping("/{id}/comments")
     public String addComment(@AuthenticationPrincipal User user,
-                                     @RequestParam String message,
-                                     @PathVariable long id) {
+                             @RequestParam String message,
+                             @PathVariable long id) {
         log.info("add comment to news with id = {} by user {}", id, user);
         Comment comment = new Comment();
         comment.setComment(message);

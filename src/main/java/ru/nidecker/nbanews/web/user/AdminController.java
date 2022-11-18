@@ -23,7 +23,7 @@ public class AdminController {
     public String users(Model model,
                         @AuthenticationPrincipal User user) {
         log.info("go to users page");
-        model.addAttribute("user",userRepository.findByEmail(user.getEmail()).orElseThrow());
+        model.addAttribute("user", userRepository.findByEmail(user.getEmail()).orElseThrow());
         model.addAttribute("users", userRepository.findAll());
         return "users";
     }

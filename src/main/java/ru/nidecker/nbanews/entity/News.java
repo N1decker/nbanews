@@ -54,6 +54,15 @@ public class News {
     @ToString.Exclude
     private List<LikeDislike> likeDislikes;
 
+
+    public News(String title, String image, String source, String sourceLogo, String editor) {
+        this.title = title;
+        this.image = image;
+        this.source = source;
+        this.sourceLogo = sourceLogo;
+        this.editor = editor;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

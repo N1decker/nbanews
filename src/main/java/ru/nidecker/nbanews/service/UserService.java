@@ -70,7 +70,7 @@ public class UserService implements UserDetailsService {
     public void deleteUser(long id,
                            User auth) {
         if (!auth.getRoles().contains(Role.ADMIN)) {
-            throw new IllegalStateException("You don't have privileges");
+            throw new IllegalArgumentException("You don't have privileges");
         } else {
             log.info("attempt to delete user with id = {}", id);
             User user = userRepository.findById(id).orElseThrow();
