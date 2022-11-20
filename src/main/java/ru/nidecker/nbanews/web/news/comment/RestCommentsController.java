@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/news")
+@RequestMapping("/api/news")
 public class RestCommentsController {
     private final NewsRepository newsRepository;
     private final CommentRepository newsUserRelationshipRepository;

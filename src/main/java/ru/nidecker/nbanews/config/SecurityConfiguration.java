@@ -3,6 +3,7 @@ package ru.nidecker.nbanews.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -29,7 +30,9 @@ public class SecurityConfiguration {
                 .authorizeRequests()
                 .antMatchers("/", "/api/v1/registration/**", "/login/**", "/images/**", "/css/**", "/fonts/**", "/js/**").permitAll()
                 .antMatchers("/users/**", "/api/admin/users/**").hasRole("ADMIN")
-                .antMatchers("/api/news/**").hasRole("EDITOR")
+                .antMatchers("/api/news/**").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/api/news/**").hasRole("EDITOR")
+                .antMatchers(HttpMethod.POST, "/news/**").hasRole("EDITOR")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

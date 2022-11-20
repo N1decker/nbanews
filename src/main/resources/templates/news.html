@@ -8,8 +8,8 @@
         <tr th:each="news1 : ${news}">
             <div class="card-container" th:id="${'news' + news1.id}">
                 <div class="card rounded">
-                    <div th:if="${news1.image}">
-                        <img th:src=" ${news1.image} ? *{'data:image/jpeg;base64,'+news1.image} : ''"
+                    <div th:if="${news1.image != '' && news1.image != null}">
+                        <img th:src="*{'data:image/jpeg;base64,'+news1.image}"
                              class="card-img-top rounded">
                     </div>
                     <div class="card-body">
@@ -42,7 +42,7 @@
                             </button>
                             <a class="source-logo"
                                th:href="${news1.source}">
-                                <img th:src=" ${news1.sourceLogo} ? *{'data:image/jpeg;base64,'+news1.sourceLogo} : ''">
+                                    <img th:src="*{'data:image/jpeg;base64,'+news1.sourceLogo}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
                                      fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"

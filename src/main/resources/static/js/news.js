@@ -11,7 +11,7 @@ function changeLike(newsId, likeType) {
 
 $('.send-msg-btn').on('click', function () {
     let id = $(this).attr('id');
-    let url = "/news/" + id + "/comments";
+    let url = "/api/news/" + id + "/comments";
     let message = $('#send-message' + id).val();
     if (message) {
         $.ajax({
@@ -31,7 +31,7 @@ $('.send-msg-btn').on('click', function () {
                     data +
                     "</div>" +
                     "<div style='right: 5px; position: absolute; color: grey'>" +
-                    date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() +
+                    date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + date.getHours() + ":" + String(date.getMinutes()).padStart(2, '0') +
                     "</div>" +
                     "</div>" +
                     "<span style='margin-left: 20px'>" + message + "</span>" +
@@ -48,7 +48,7 @@ $('.chat').on('click', function () {
         this.classList.remove("collapsed")
     } else {
         let id = $(this).attr('id');
-        let url = "/news/" + id + "/comments";
+        let url = "/api/news/" + id + "/comments";
         $.ajax({
             url: url,
             type: 'GET',

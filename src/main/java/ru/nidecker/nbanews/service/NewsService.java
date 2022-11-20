@@ -1,5 +1,6 @@
 package ru.nidecker.nbanews.service;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,6 +10,7 @@ import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.repository.NewsRepository;
 import ru.nidecker.nbanews.util.validation.URLValidator;
 
+import java.util.Arrays;
 import java.util.Base64;
 
 @Service
@@ -21,11 +23,13 @@ public class NewsService {
         this.newsRepository = newsRepository;
     }
 
+    @SneakyThrows
     public News save(String title,
                      MultipartFile image,
                      String source,
                      MultipartFile sourceLogo,
                      User user) {
+        log.info(Arrays.toString(image.getBytes()));
         if (!user.getRoles().contains(Role.EDITOR)) {
             throw new IllegalArgumentException("You don't have privileges");
         } else {
