@@ -3,7 +3,8 @@ spring:
     username: user
     password: password
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/nbanews
+#    url: jdbc:postgresql://localhost:5432/nbanews
+    url: jdbc:postgresql://postgresql:5432/nbanews
   h2:
     console:
       enabled: true

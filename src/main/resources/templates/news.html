@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head th:include="/fragments/header :: header"></head>
+<head th:replace="fragments/header :: header"></head>
 <body>
-<div th:include="/fragments/navbar :: navbar"></div>
+<div th:replace="fragments/navbar :: navbar"></div>
 <div class="container">
     <div class="horizontal-center" style="margin-right: unset">
         <tr th:each="news1 : ${news}">
@@ -128,7 +128,7 @@
                         </button>
                     </div>
                 </div>
-                <div th:include="/fragments/addNews :: addNews"></div>
+                <div th:replace="fragments/addNews :: addNews"></div>
             </div>
         </div>
     </aside>
