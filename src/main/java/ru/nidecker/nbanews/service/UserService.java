@@ -77,7 +77,7 @@ public class UserService implements UserDetailsService {
             if (user.getNickname().equals("User") ||
                     user.getNickname().equals("Admin") ||
                     user.getNickname().equals("SuperAdmin") ||
-                    user.getNickname().equals("Editor") ) {
+                    user.getNickname().equals("Editor")) {
                 throw new IllegalArgumentException("You cannot delete this user");
             } else {
                 log.info("delete user with id = {}", id);
@@ -85,6 +85,7 @@ public class UserService implements UserDetailsService {
             }
         }
     }
+
     @Transactional
     public void blockUser(long id, boolean locked, User auth) {
         if (!auth.getRoles().contains(Role.ADMIN)) {
@@ -95,7 +96,7 @@ public class UserService implements UserDetailsService {
             if (user.getNickname().equals("User") ||
                     user.getNickname().equals("Admin") ||
                     user.getNickname().equals("SuperAdmin") ||
-                    user.getNickname().equals("Editor") ) {
+                    user.getNickname().equals("Editor")) {
                 throw new IllegalStateException("You cannot block this user");
             } else {
                 log.info("change the user's lock with id = {}", id);
@@ -177,7 +178,10 @@ public class UserService implements UserDetailsService {
 
     public void deleteProfile(User user) {
         log.info("attempt to delete profile by user {}", user);
-        if (user.getEmail().equals("admin@gmail.com") || user.getEmail().equals("user@gmail.com")) {
+        if (user.getEmail().equals("admin@gmail.com") ||
+                user.getEmail().equals("user@gmail.com") ||
+                user.getEmail().equals("superadmin@admin.ru") ||
+                user.getEmail().equals("editor@yahoo.com")) {
             throw new IllegalStateException("you cannot delete this user");
         } else {
             log.info("delete user {}", user);
