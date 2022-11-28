@@ -2,6 +2,8 @@ package ru.nidecker.nbanews.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -14,8 +16,8 @@ import java.util.Date;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({FieldAlreadyTakenException.class, IllegalStateException.class, IllegalArgumentException.class, WrongPasswordException.class})
-    public ResponseEntity<?> handleFieldAlreadyTaken(Exception exception, WebRequest request) {
+    @ExceptionHandler({FieldAlreadyTakenException.class, IllegalStateException.class, IllegalArgumentException.class, WrongPasswordException.class, AuthenticationException.class})
+    public ResponseEntity<?> handleExceptions(Exception exception, WebRequest request) {
         ErrorDetails errorDetails =
                 new ErrorDetails(new Date(), exception.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);

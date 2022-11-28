@@ -5,6 +5,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.repository.UserRepository;
 import ru.nidecker.nbanews.util.validation.EmailValidator;
@@ -13,7 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
+//@Component
+@Service
 @RequiredArgsConstructor
 public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
@@ -36,13 +38,13 @@ public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailure
         boolean isValidEmail = EmailValidator.validate(email);
         if (!isValidEmail) {
             message = NOT_VALID_EMAIL;
-        } else if (user != null && user.isLocked()) {
-            message = BLOCKED_ACCOUNT_MSG;
         } else if (user != null && !bCryptPasswordEncoder.matches(password, user.getPassword())) {
             message = WRONG_PASSWORD_MSG;
+        } else if (user != null && user.isLocked()) {
+            message = BLOCKED_ACCOUNT_MSG;
         } else if (user == null) {
             message = USER_NOT_FOUND_MSG;
         }
-        response.sendError(401, message);
+        response.sendError(400, message);
     }
 }

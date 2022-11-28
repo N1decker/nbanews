@@ -74,10 +74,12 @@ public class UserService implements UserDetailsService {
         } else {
             log.info("attempt to delete user with id = {}", id);
             User user = userRepository.findById(id).orElseThrow();
-            if (user.getNickname().equals("User") ||
-                    user.getNickname().equals("Admin") ||
-                    user.getNickname().equals("SuperAdmin") ||
-                    user.getNickname().equals("Editor")) {
+            if (user.getNickname().equals("SuperAdmin")
+//                    ||
+//                    user.getNickname().equals("Admin") ||
+//                    user.getNickname().equals("User") ||
+//                    user.getNickname().equals("Editor")
+        ) {
                 throw new IllegalArgumentException("You cannot delete this user");
             } else {
                 log.info("delete user with id = {}", id);
@@ -93,10 +95,12 @@ public class UserService implements UserDetailsService {
         } else {
             log.info("attempt to change the user's lock with id = {}", id);
             User user = userRepository.findById(id).orElseThrow();
-            if (user.getNickname().equals("User") ||
-                    user.getNickname().equals("Admin") ||
-                    user.getNickname().equals("SuperAdmin") ||
-                    user.getNickname().equals("Editor")) {
+            if (user.getNickname().equals("SuperAdmin")
+//                    ||
+//                    user.getNickname().equals("Admin") ||
+//                    user.getNickname().equals("User") ||
+//                    user.getNickname().equals("Editor")
+            ) {
                 throw new IllegalStateException("You cannot block this user");
             } else {
                 log.info("change the user's lock with id = {}", id);
@@ -110,7 +114,7 @@ public class UserService implements UserDetailsService {
                                     String inputType,
                                     String changeTo) {
         log.info(String.format("attempt to change profile data by user %s", user));
-        if (user.getEmail().equals("admin@gmail.com") || user.getEmail().equals("user@gmail.com")) {
+        if (user.getEmail().equals("superadmin@admin.ru")) {
             throw new IllegalStateException("You cannot change this user's data");
         } else {
             log.info(String.format("change field %s to %s by user %s", inputType, changeTo, user));
@@ -148,7 +152,7 @@ public class UserService implements UserDetailsService {
                                String oldPassword,
                                String newPassword) {
         log.info("attempt to change password by user {}", auth);
-        if (auth.getEmail().equals("admin@gmail.com") || auth.getEmail().equals("user@gmail.com")) {
+        if (auth.getEmail().equals("superadmin@admin.ru")) {
             throw new IllegalStateException("You cannot change this user's data");
         } else {
             log.info("change password by user {}", auth);
@@ -178,10 +182,12 @@ public class UserService implements UserDetailsService {
 
     public void deleteProfile(User user) {
         log.info("attempt to delete profile by user {}", user);
-        if (user.getEmail().equals("admin@gmail.com") ||
-                user.getEmail().equals("user@gmail.com") ||
-                user.getEmail().equals("superadmin@admin.ru") ||
-                user.getEmail().equals("editor@yahoo.com")) {
+        if (user.getEmail().equals("superadmin@admin.ru")
+//                ||
+//                user.getEmail().equals("admin@gmail.com") ||
+//                user.getEmail().equals("user@gmail.com") ||
+//                user.getEmail().equals("editor@yahoo.com")
+        ) {
             throw new IllegalStateException("you cannot delete this user");
         } else {
             log.info("delete user {}", user);
