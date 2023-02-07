@@ -1,10 +1,9 @@
-package ru.nidecker.nbanews.handler;
+package ru.nidecker.nbanews.advice;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.repository.UserRepository;

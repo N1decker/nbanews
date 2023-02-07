@@ -27,21 +27,29 @@ public class News {
 
     @NotBlank
     private String title;
+
+    //Todo: add subhead string
+
+    //Todo: change to url to image
     private String image;
 
     @NotBlank
     private String source;
 
     @NotNull
+    // TODO: change to NewsSourceLogo relationship
     private String sourceLogo;
 
     @NotNull
+    //Todo: maybe I should delete this field
     private LocalDate newsDate = LocalDate.now();
 
     @NotNull
+    //Todo: maybe I should delete this field
     private LocalTime newsTime = LocalTime.now().truncatedTo(TimeUnit.MINUTES.toChronoUnit());
 
     @NotBlank
+    //Todo: change field name to contentAuthor
     private String editor;
 
     @OneToMany(orphanRemoval = true, mappedBy = "news", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
