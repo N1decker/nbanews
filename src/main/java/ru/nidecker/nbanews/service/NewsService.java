@@ -3,50 +3,57 @@ package ru.nidecker.nbanews.service;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import ru.nidecker.nbanews.entity.News;
+import ru.nidecker.nbanews.entity.NewsSource;
 import ru.nidecker.nbanews.entity.Role;
 import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.repository.NewsRepository;
+import ru.nidecker.nbanews.repository.NewsSourceLogoRepository;
 import ru.nidecker.nbanews.util.validation.URLValidator;
 
 import java.util.Arrays;
-import java.util.Base64;
 
 @Service
 @Slf4j
 public class NewsService {
 
     private final NewsRepository newsRepository;
+    private final NewsSourceLogoRepository newsSourceLogoRepository;
 
-    public NewsService(NewsRepository newsRepository) {
+    public NewsService(NewsRepository newsRepository, NewsSourceLogoRepository newsSourceLogoRepository) {
         this.newsRepository = newsRepository;
+        this.newsSourceLogoRepository = newsSourceLogoRepository;
     }
 
     @SneakyThrows
     public News save(String title,
-                     MultipartFile image,
-                     String source,
-                     MultipartFile sourceLogo,
+                     String image,
+                     String sourceURL,
+                     String newsSource,
                      User user) {
         log.info(Arrays.toString(image.getBytes()));
         if (!user.getRoles().contains(Role.EDITOR)) {
             throw new IllegalArgumentException("You don't have privileges");
         } else {
-            if (!URLValidator.validate(source)) {
+            if (!URLValidator.validate(sourceURL)) {
                 throw new IllegalArgumentException("incorrect link to the source");
             }
             News news = new News();
             try {
-                news.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
-                news.setSourceLogo(Base64.getEncoder().encodeToString(sourceLogo.getBytes()));
+//                news.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+                news.setImageURL(image);
+                news.setNewsSource(chooseNewsSource(newsSource));
             } catch (Exception ignored) {
             }
-            news.setEditor(user.getNickname());
+            news.setContentAuthor(user.getNickname());
             news.setTitle(title);
-            news.setSource(source);
+            news.setSource(sourceURL);
             return newsRepository.save(news);
         }
+    }
+
+    private NewsSource chooseNewsSource(String newsSourceName) {
+        return newsSourceLogoRepository.findNewsSourceByNameIgnoreCase(newsSourceName);
     }
 
     public void delete(long id,

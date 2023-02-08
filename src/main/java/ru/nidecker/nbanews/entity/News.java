@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 @Getter
 @Setter
 @ToString
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class News {
@@ -28,17 +29,17 @@ public class News {
     @NotBlank
     private String title;
 
-    //Todo: add subhead string
+    private String subhead;
 
-    //Todo: change to url to image
-    private String image;
+    private String imageURL;
 
     @NotBlank
     private String source;
 
     @NotNull
-    // TODO: change to NewsSourceLogo relationship
-    private String sourceLogo;
+    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @ToString.Exclude
+    private NewsSource newsSource;
 
     @NotNull
     //Todo: maybe I should delete this field
@@ -49,8 +50,7 @@ public class News {
     private LocalTime newsTime = LocalTime.now().truncatedTo(TimeUnit.MINUTES.toChronoUnit());
 
     @NotBlank
-    //Todo: change field name to contentAuthor
-    private String editor;
+    private String contentAuthor;
 
     @OneToMany(orphanRemoval = true, mappedBy = "news", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonBackReference
@@ -63,12 +63,12 @@ public class News {
     private List<LikeDislike> likeDislikes;
 
 
-    public News(String title, String image, String source, String sourceLogo, String editor) {
+    public News(String title, String imageURL, String source, NewsSource newsSource, String contentAuthor) {
         this.title = title;
-        this.image = image;
+        this.imageURL = imageURL;
         this.source = source;
-        this.sourceLogo = sourceLogo;
-        this.editor = editor;
+        this.newsSource = newsSource;
+        this.contentAuthor = contentAuthor;
     }
 
     @Override

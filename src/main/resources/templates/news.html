@@ -8,8 +8,9 @@
         <tr th:each="news1 : ${news}">
             <div class="card-container" th:id="${'news' + news1.id}">
                 <div class="card rounded">
-                    <div th:if="${news1.image != '' && news1.image != null}">
-                        <img th:src="*{'data:image/jpeg;base64,'+news1.image}"
+                    <div th:if="${news1.getImageURL != '' && news1.getImageURL != null}">
+<!--                        <img th:src="*{'data:image/jpeg;base64,'+news1.getImageURL}"-->
+                        <img th:src="${news1.getImageURL}"
                              class="card-img-top rounded">
                     </div>
                     <div class="card-body">
@@ -42,7 +43,7 @@
                             </button>
                             <a class="source-logo"
                                th:href="${news1.source}">
-                                    <img th:src="*{'data:image/jpeg;base64,'+news1.sourceLogo}">
+                                    <img th:src="*{'data:image/jpeg;base64,'+news1.getNewsSource().getImage()}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
                                      fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
@@ -58,7 +59,7 @@
                             </div>
                             <div class="col">
                                 <p class="text-center" th:text="${news1.newsDate + ' ' + news1.newsTime}"></p>
-                                <p class="text-center" th:text="${'Editor: ' + news1.editor}"></p>
+                                <p class="text-center" th:text="${'Editor: ' + news1.getContentAuthor}"></p>
                             </div>
                             <div class="col" style="transform: translateY(30%);">
                                 <button class="delete-news-btn btn btn-danger" style="float: right" sec:authorize="hasRole('EDITOR')">

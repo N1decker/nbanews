@@ -10,6 +10,7 @@ import org.jsoup.select.Elements;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.nidecker.nbanews.entity.News;
+import ru.nidecker.nbanews.entity.NewsSource;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -19,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class NewsParser {
 
-    @Scheduled(fixedRate = 10, timeUnit = TimeUnit.SECONDS, initialDelay = 1)
+    @Scheduled(fixedRate = 10, timeUnit = TimeUnit.MINUTES, initialDelay = 1)
     @SneakyThrows
     public static void parse() {
         parseEspnCom();
@@ -47,13 +48,21 @@ public class NewsParser {
                     element.getElementsByTag("picture").get(0)
                             .getElementsByTag("img").get(0).attr("data-default-src");
 
-            log.info("\n ------------------------------ \n {} \n {} {} {} {} \n ------------------------------ \n",
+            log.info("\n ------------------------------ \n {} \n {} \n {} \n {} \n {} \n ------------------------------ \n",
                     title, subhead, contentAuthor, originalSource, imgSrc);
+
+            mapToNewsEntity(title, subhead, originalSource, contentAuthor, imgSrc, NewsSource.SourceName.ESPN);
         }
     }
 
-    private static void mapToNewsEntity(String title, String subhead, String originalSource, String contentAuthor, String imgSrc) {
+    private static void mapToNewsEntity(String title, String subhead, String originalSource, String contentAuthor, String imgSrc, NewsSource.SourceName siteName) {
         News news = new News();
+
+        switch (siteName) {
+            case ESPN -> {
+//                news.setSource
+            }
+        }
     }
 
 }

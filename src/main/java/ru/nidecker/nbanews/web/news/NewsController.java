@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import ru.nidecker.nbanews.entity.LikeDislike;
 import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.repository.LikeDislikeRepository;
@@ -48,11 +47,12 @@ public class NewsController {
 
     @PostMapping
     public String save(@RequestParam("title") String title,
-                       @RequestParam("image") MultipartFile image,
-                       @RequestParam("source") String source,
-                       @RequestParam("sourceLogo") MultipartFile sourceLogo,
+//                       @RequestParam("image") MultipartFile image,
+                       @RequestParam("image") String image,
+                       @RequestParam("sourceURL") String sourceURL,
+                       @RequestParam("sourceName") String sourceName,
                        @AuthenticationPrincipal User user) {
-        newsService.save(title, image, source, sourceLogo, user);
+        newsService.save(title, image, sourceURL, sourceName, user);
         return "redirect:/news";
     }
 }
