@@ -3,6 +3,7 @@ package ru.nidecker.nbanews.service;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.nidecker.nbanews.entity.News;
 import ru.nidecker.nbanews.entity.NewsSource;
 import ru.nidecker.nbanews.entity.Role;
@@ -11,7 +12,8 @@ import ru.nidecker.nbanews.repository.NewsRepository;
 import ru.nidecker.nbanews.repository.NewsSourceLogoRepository;
 import ru.nidecker.nbanews.util.validation.URLValidator;
 
-import java.util.Arrays;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -27,11 +29,11 @@ public class NewsService {
 
     @SneakyThrows
     public News save(String title,
-                     String image,
+                     String imageURL,
                      String sourceURL,
                      String newsSource,
                      User user) {
-        log.info(Arrays.toString(image.getBytes()));
+
         if (!user.getRoles().contains(Role.EDITOR)) {
             throw new IllegalArgumentException("You don't have privileges");
         } else {
@@ -40,8 +42,7 @@ public class NewsService {
             }
             News news = new News();
             try {
-//                news.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
-                news.setImageURL(image);
+                news.setImageURL(imageURL);
                 news.setNewsSource(chooseNewsSource(newsSource));
             } catch (Exception ignored) {
             }
@@ -52,7 +53,31 @@ public class NewsService {
         }
     }
 
-    private NewsSource chooseNewsSource(String newsSourceName) {
+    @SneakyThrows
+    public News prepare(String title,
+                        String subhead,
+                        String sourceURL,
+                        String imageURL,
+                        NewsSource newsSource,
+                        String contentAuthor) {
+
+        if (!URLValidator.validate(sourceURL)) {
+            throw new IllegalArgumentException("incorrect link to the source");
+        }
+
+        News news = new News();
+        news.setTitle(title);
+        news.setSubhead(subhead);
+        news.setSource(sourceURL);
+        news.setImageURL(imageURL);
+        news.setNewsSource(newsSource);
+        news.setContentAuthor(contentAuthor);
+
+        return news;
+    }
+
+
+    public NewsSource chooseNewsSource(String newsSourceName) {
         return newsSourceLogoRepository.findNewsSourceByNameIgnoreCase(newsSourceName);
     }
 
@@ -64,5 +89,9 @@ public class NewsService {
         } else {
             newsRepository.deleteById(id);
         }
+    }
+
+    public void saveAll(List<News> news) {
+        newsRepository.saveAll(news);
     }
 }

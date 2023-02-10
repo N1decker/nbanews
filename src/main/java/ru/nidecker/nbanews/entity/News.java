@@ -31,6 +31,7 @@ public class News {
 
     private String subhead;
 
+    @NotBlank
     private String imageURL;
 
     @NotBlank
@@ -42,14 +43,11 @@ public class News {
     private NewsSource newsSource;
 
     @NotNull
-    //Todo: maybe I should delete this field
     private LocalDate newsDate = LocalDate.now();
 
     @NotNull
-    //Todo: maybe I should delete this field
     private LocalTime newsTime = LocalTime.now().truncatedTo(TimeUnit.MINUTES.toChronoUnit());
 
-    @NotBlank
     private String contentAuthor;
 
     @OneToMany(orphanRemoval = true, mappedBy = "news", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)

@@ -2,7 +2,9 @@ package ru.nidecker.nbanews.entity;
 
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GeneratorType;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -23,6 +25,11 @@ public class NewsSource {
     private String name;
 
     private String image;
+
+    public NewsSource(String name, String image) {
+        this.name = name;
+        this.image = image;
+    }
 
     public enum SourceName {
         ESPN, ANDSCAPE
