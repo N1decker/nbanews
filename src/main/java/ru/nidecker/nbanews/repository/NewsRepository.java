@@ -9,5 +9,9 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 
     List<News> findAllByOrderByIdDesc();
 
+    List<News> findTopN(int countOfRowsToGet);
+
+    List<News> findAllByOrderByNewsDateDescNewsTimeDesc();
+
     void deleteById(long id);
 }

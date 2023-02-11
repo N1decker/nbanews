@@ -3,7 +3,6 @@ package ru.nidecker.nbanews.service;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.nidecker.nbanews.entity.News;
 import ru.nidecker.nbanews.entity.NewsSource;
 import ru.nidecker.nbanews.entity.Role;
@@ -12,7 +11,6 @@ import ru.nidecker.nbanews.repository.NewsRepository;
 import ru.nidecker.nbanews.repository.NewsSourceLogoRepository;
 import ru.nidecker.nbanews.util.validation.URLValidator;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -60,10 +58,6 @@ public class NewsService {
                         String imageURL,
                         NewsSource newsSource,
                         String contentAuthor) {
-
-        if (!URLValidator.validate(sourceURL)) {
-            throw new IllegalArgumentException("incorrect link to the source");
-        }
 
         News news = new News();
         news.setTitle(title);

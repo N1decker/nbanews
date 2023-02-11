@@ -37,7 +37,7 @@ public class NewsController {
     public String news(Model model, @AuthenticationPrincipal User user) {
         log.info("go to news page by user {}", user);
         model.addAttribute("user", userRepository.findByEmail(user.getEmail()).orElseThrow());
-        model.addAttribute("news", newsRepository.findAllByOrderByIdDesc());
+        model.addAttribute("news", newsRepository.findAllByOrderByNewsDateDescNewsTimeDesc());
         Map<String, LikeDislike> likes = likeDislikeRepository.findAllByUserId(user.getId())
                 .stream()
                 .collect(Collectors.toMap(likeDislike -> (likeDislike.getNews().getId() + "" + likeDislike.getUser().getEmail()), likeDislike -> likeDislike));
@@ -47,7 +47,6 @@ public class NewsController {
 
     @PostMapping
     public String save(@RequestParam("title") String title,
-//                       @RequestParam("image") MultipartFile image,
                        @RequestParam("image") String image,
                        @RequestParam("sourceURL") String sourceURL,
                        @RequestParam("sourceName") String sourceName,

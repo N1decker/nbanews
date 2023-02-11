@@ -9,12 +9,12 @@
             <div class="card-container" th:id="${'news' + news1.id}">
                 <div class="card rounded">
                     <div th:if="${news1.getImageURL != '' && news1.getImageURL != null}">
-<!--                        <img th:src="*{'data:image/jpeg;base64,'+news1.getImageURL}"-->
                         <img th:src="${news1.getImageURL}"
                              class="card-img-top rounded">
                     </div>
                     <div class="card-body">
                         <h5 class="card-title" th:text="${news1.title}"></h5>
+                        <h6 class="card-subtitle mb-2 text-muted" th:text="${news1.subhead}"></h6>
                         <div th:id="${news1.id}">
                             <!--В th:style проверяется, поставил ли юзер лайк, если его нет в бд, приходит null и цвет лайков не меняется, если есть, приходит 1 или -1-->
                             <button class="btn like" type="button">
@@ -58,8 +58,7 @@
 
                             </div>
                             <div class="col">
-                                <p class="text-center" th:text="${news1.newsDate + ' ' + news1.newsTime}"></p>
-                                <p class="text-center" th:text="${'Editor: ' + news1.getContentAuthor}"></p>
+                                <p class="text-center" th:text="${news1.getContentAuthor}"></p>
                             </div>
                             <div class="col" style="transform: translateY(30%);">
                                 <button class="delete-news-btn btn btn-danger" style="float: right" sec:authorize="hasRole('EDITOR')">

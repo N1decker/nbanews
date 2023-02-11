@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.nidecker.nbanews.entity.News;
 import ru.nidecker.nbanews.entity.NewsSource;
+import ru.nidecker.nbanews.repository.NewsRepository;
 import ru.nidecker.nbanews.repository.NewsSourceLogoRepository;
 import ru.nidecker.nbanews.service.NewsService;
 
@@ -24,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class NewsParser {
 
+    private final NewsRepository newsRepository;
     private final NewsService newsService;
     private final NewsSourceLogoRepository newsSourceLogoRepository;
 
@@ -305,14 +307,17 @@ public class NewsParser {
         List<News> news = new ArrayList<>();
 
         for (Element element : content) {
+
+            String originalSource = element.getElementsByTag("a").size() == 0 ? "" :
+                    "https://www.espn.com" + element.getElementsByTag("a").get(0).attr("href");
+
+            if (originalSource.equals("")) continue;
+
             String title = element.getElementsByTag("h1").size() == 0 ? "" :
                     element.getElementsByTag("h1").get(0).text();
 
             String subhead = element.getElementsByTag("p").size() == 0 ? "" :
                     element.getElementsByTag("p").get(0).text();
-
-            String originalSource = element.getElementsByTag("a").size() == 0 ? "" :
-                    "https://www.espn.com" + element.getElementsByTag("a").get(0).attr("href");
 
             String contentAuthor = element.getElementsByClass("contentMeta__author").size() == 0 ?
                     "" : element.getElementsByClass("contentMeta__author").get(0).text();
@@ -324,16 +329,21 @@ public class NewsParser {
             news.add(mapToNewsEntity(title, subhead, originalSource, contentAuthor, imageURL, newsSource));
         }
 
+        List<News> top20 = newsRepository.findTopN(20);
+
+        news.removeAll(top20);
+
         newsService.saveAll(news);
     }
 
     private News mapToNewsEntity(String title, String subhead, String originalSource, String contentAuthor, String imageURL, NewsSource siteName) {
-        News news = null;
         switch (siteName.getName()) {
             case "espn" -> {
-                news = newsService.prepare(title, subhead, originalSource, imageURL, siteName, contentAuthor);
+                return newsService.prepare(title, subhead, originalSource, imageURL, siteName, contentAuthor);
+            }
+            case "andscape" -> {
             }
         }
-        return news;
+        return null;
     }
 }
