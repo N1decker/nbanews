@@ -9,9 +9,10 @@ import ru.nidecker.nbanews.entity.Role;
 import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.repository.NewsRepository;
 import ru.nidecker.nbanews.repository.NewsSourceLogoRepository;
-import ru.nidecker.nbanews.util.validation.URLValidator;
 
 import java.util.List;
+
+import static ru.nidecker.nbanews.util.validation.URLValidator.validate;
 
 @Service
 @Slf4j
@@ -35,8 +36,11 @@ public class NewsService {
         if (!user.getRoles().contains(Role.EDITOR)) {
             throw new IllegalArgumentException("You don't have privileges");
         } else {
-            if (!URLValidator.validate(sourceURL)) {
+            if (!(validate(sourceURL))) {
                 throw new IllegalArgumentException("incorrect link to the source");
+            }
+            if (!validate(imageURL)) {
+                throw new IllegalArgumentException("incorrect link to the image");
             }
             News news = new News();
             try {

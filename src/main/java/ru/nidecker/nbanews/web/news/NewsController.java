@@ -35,7 +35,7 @@ public class NewsController {
 
     @GetMapping
     public String news(Model model, @AuthenticationPrincipal User user) {
-        log.info("go to news page by user {}", user);
+        log.info("go to news page by user {}", user.getNickname());
         model.addAttribute("user", userRepository.findByEmail(user.getEmail()).orElseThrow());
         model.addAttribute("news", newsRepository.findAllByOrderByNewsDateDescNewsTimeDesc());
         Map<String, LikeDislike> likes = likeDislikeRepository.findAllByUserId(user.getId())
