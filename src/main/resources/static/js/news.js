@@ -60,7 +60,10 @@ $('.chat').on('click', function () {
                     list +=
                         "<li class='list-group-item mb-1'>" +
                         "<div class='row m-0'>" +
-                        "<div>" + item.user.nickname + "</div>" +
+                        "<div class='row m-0'>" +
+                        "<img width='25' height='25' class='rounded-circle' src='data:image/jpeg;base64," + item.user.avatar + "'>" +
+                        "<div class='ml-2'>" + item.user.nickname + "</div>" +
+                        "</div>" +
                         "<div style='right: 5px; position: absolute; color: grey'>" +
                         item.dateTime.replace('T', ' ').replaceAll('-', '/').substring(0, 16) +
                         "</div>" +

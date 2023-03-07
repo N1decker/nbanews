@@ -8,8 +8,8 @@
         <tr th:each="news1 : ${news}">
             <div class="card-container" th:id="${'news' + news1.id}">
                 <div class="card rounded">
-                    <div th:if="${news1.getImageURL != '' && news1.getImageURL != null}">
-                        <img th:src="${news1.getImageURL}"
+                    <div th:if="${news1.getImageUrl != '' && news1.getImageUrl != null}">
+                        <img th:src="${news1.getImageUrl}"
                              class="card-img-top rounded">
                     </div>
                     <div class="card-body">

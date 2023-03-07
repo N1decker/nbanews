@@ -33,7 +33,7 @@ public class Comment {
     @NotNull
     @ManyToOne
     @JoinColumn
-    @JsonIgnoreProperties(value = {"password", "roles", "locked", "avatar"})
+    @JsonIgnoreProperties(value = {"password", "roles", "locked"})
     private User user;
 
     @NotNull

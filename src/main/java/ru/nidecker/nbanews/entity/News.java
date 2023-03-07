@@ -32,13 +32,13 @@ public class News {
     private String subhead;
 
     @NotBlank
-    private String imageURL;
+    private String imageUrl;
 
     @NotBlank
     private String source;
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @ManyToOne
     @ToString.Exclude
     private NewsSource newsSource;
 
@@ -61,9 +61,9 @@ public class News {
     private List<LikeDislike> likeDislikes;
 
 
-    public News(String title, String imageURL, String source, NewsSource newsSource, String contentAuthor) {
+    public News(String title, String imageUrl, String source, NewsSource newsSource, String contentAuthor) {
         this.title = title;
-        this.imageURL = imageURL;
+        this.imageUrl = imageUrl;
         this.source = source;
         this.newsSource = newsSource;
         this.contentAuthor = contentAuthor;

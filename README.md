@@ -9,6 +9,7 @@
 На данный момент не работает регистрация, проблемы с рассылкой кода подтверждения
 
 Стек технологий: 
+- Spring Boot
 - Spring Security
 - Spring Security Test
 - Spring Data JPA

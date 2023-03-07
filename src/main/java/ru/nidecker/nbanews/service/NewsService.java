@@ -44,7 +44,7 @@ public class NewsService {
             }
             News news = new News();
             try {
-                news.setImageURL(imageURL);
+                news.setImageUrl(imageURL);
                 news.setNewsSource(chooseNewsSource(newsSource));
             } catch (Exception ignored) {
             }
@@ -67,7 +67,7 @@ public class NewsService {
         news.setTitle(title);
         news.setSubhead(subhead);
         news.setSource(sourceURL);
-        news.setImageURL(imageURL);
+        news.setImageUrl(imageURL);
         news.setNewsSource(newsSource);
         news.setContentAuthor(contentAuthor);
 
