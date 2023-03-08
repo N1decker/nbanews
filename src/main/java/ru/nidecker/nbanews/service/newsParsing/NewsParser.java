@@ -7,11 +7,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nidecker.nbanews.entity.News;
 import ru.nidecker.nbanews.entity.NewsSource;
+import ru.nidecker.nbanews.repository.ImageRepository;
 import ru.nidecker.nbanews.repository.NewsRepository;
 import ru.nidecker.nbanews.service.NewsService;
 
@@ -27,11 +29,19 @@ public class NewsParser {
 
     private final NewsRepository newsRepository;
     private final NewsService newsService;
+    private final ImageRepository imageRepository;
 
     @Scheduled(fixedRate = 30000, timeUnit = TimeUnit.SECONDS, initialDelay = 30)
     @SneakyThrows
     public void parse() {
         parseEspnCom();
+    }
+
+    @Transactional
+    @Modifying
+    @Scheduled(fixedRate = 30000, timeUnit = TimeUnit.SECONDS, initialDelay = 10)
+    public void deleteUnusedImages() {
+        imageRepository.deleteUnusedImages();
     }
 
     @Transactional

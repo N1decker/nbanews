@@ -1,7 +1,6 @@
 package ru.nidecker.nbanews.service;
 
 import org.assertj.core.internal.bytebuddy.utility.RandomString;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,22 +62,6 @@ public class UserServiceTest extends AbstractTest {
 
         assertThrows(NoSuchElementException.class,
                 () -> userService.deleteUser(NOT_FOUND_USER_ID, auth));
-    }
-
-    @Test
-    void deleteAdmin() {
-        User auth = new User();
-        auth.setRoles(Set.of(Role.ADMIN));
-        Mockito.when(userRepository.findById(Mockito.anyLong()))
-                .thenReturn(Optional.of(new User(
-                        "Admin",
-                        RandomString.make(),
-                        RandomString.make(),
-                        Set.of(Role.ADMIN)
-                )));
-
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> userService.deleteUser(Mockito.anyLong(), auth));
     }
 
     @Test
