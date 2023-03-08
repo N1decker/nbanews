@@ -9,11 +9,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import ru.nidecker.nbanews.entity.Image;
 import ru.nidecker.nbanews.entity.Role;
 import ru.nidecker.nbanews.entity.User;
 import ru.nidecker.nbanews.exception.FieldAlreadyTakenException;
 import ru.nidecker.nbanews.exception.WrongPasswordException;
 import ru.nidecker.nbanews.entity.ConfirmationToken;
+import ru.nidecker.nbanews.repository.ImageRepository;
 import ru.nidecker.nbanews.repository.UserRepository;
 import ru.nidecker.nbanews.util.validation.EmailValidator;
 import ru.nidecker.nbanews.util.validation.PasswordValidator;
@@ -29,6 +31,7 @@ public class UserService implements UserDetailsService {
 
     private final static String USER_NOT_FOUND_MESSAGE = "User with email %s not found";
     private final UserRepository userRepository;
+    private final ImageRepository imageRepository;
     private final ConfirmationTokenService confirmationTokenService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -49,6 +52,7 @@ public class UserService implements UserDetailsService {
 
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
+        user.setImage(imageRepository.findById(1L).orElseThrow());
         userRepository.save(user);
 
         String token = UUID.randomUUID().toString();
@@ -74,12 +78,7 @@ public class UserService implements UserDetailsService {
         } else {
             log.info("attempt to delete user with id = {}", id);
             User user = userRepository.findById(id).orElseThrow();
-            if (user.getNickname().equals("SuperAdmin")
-//                    ||
-//                    user.getNickname().equals("Admin") ||
-//                    user.getNickname().equals("User") ||
-//                    user.getNickname().equals("Editor")
-        ) {
+            if (user.getNickname().equals("SuperAdmin")) {
                 throw new IllegalArgumentException("You cannot delete this user");
             } else {
                 log.info("delete user with id = {}", id);
@@ -95,12 +94,7 @@ public class UserService implements UserDetailsService {
         } else {
             log.info("attempt to change the user's lock with id = {}", id);
             User user = userRepository.findById(id).orElseThrow();
-            if (user.getNickname().equals("SuperAdmin")
-//                    ||
-//                    user.getNickname().equals("Admin") ||
-//                    user.getNickname().equals("User") ||
-//                    user.getNickname().equals("Editor")
-            ) {
+            if (user.getNickname().equals("SuperAdmin")) {
                 throw new IllegalStateException("You cannot block this user");
             } else {
                 log.info("change the user's lock with id = {}", id);
@@ -174,7 +168,9 @@ public class UserService implements UserDetailsService {
         log.info("change avatar by user {}", auth);
         User user = userRepository.findById(auth.getId()).orElseThrow();
         try {
-            user.setAvatar(Base64.getEncoder().encodeToString(avatar.getBytes()));
+            Image image = new Image(Base64.getEncoder().encodeToString(avatar.getBytes()));
+            imageRepository.save(image);
+            user.setImage(image);
         } catch (Exception ignored) {
         }
         userRepository.save(user);
@@ -182,12 +178,7 @@ public class UserService implements UserDetailsService {
 
     public void deleteProfile(User user) {
         log.info("attempt to delete profile by user {}", user);
-        if (user.getEmail().equals("superadmin@admin.ru")
-//                ||
-//                user.getEmail().equals("admin@gmail.com") ||
-//                user.getEmail().equals("user@gmail.com") ||
-//                user.getEmail().equals("editor@yahoo.com")
-        ) {
+        if (user.getEmail().equals("superadmin@admin.ru")) {
             throw new IllegalStateException("you cannot delete this user");
         } else {
             log.info("delete user {}", user);

@@ -16,7 +16,7 @@
                         <h5 class="card-title" th:text="${news1.title}"></h5>
                         <h6 class="card-subtitle mb-2 text-muted" th:text="${news1.subhead}"></h6>
                         <div th:id="${news1.id}">
-                            <!--В th:style проверяется, поставил ли юзер лайк, если его нет в бд, приходит null и цвет лайков не меняется, если есть, приходит 1 или -1-->
+                            <!--В th:style проверяется, поставил ли юзер лайк. Если его нет в бд, приходит null и цвет лайков не меняется, если есть, приходит 1 или -1-->
                             <button class="btn like" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                                      th:style="${((likesDislikes.get(news1.id+''+#request.userPrincipal.getName()) == null ? 0 : likesDislikes.get(news1.id+''+#request.userPrincipal.getName()).likeType) == 1) ? 'fill: black;' : 'fill: darkgrey;'}"

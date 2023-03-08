@@ -20,15 +20,16 @@ $('.send-msg-btn').on('click', function () {
             data: {
                 message, id
             },
-            success: function (data) {
+            success: function (user) {
 
                 $('#send-message' + id).val("");
                 let date = new Date();
                 $("#message-list" + id).append(
                     "<li class='list-group-item mb-1'>" +
                     "<div class='row m-0'>" +
-                    "<div>" +
-                    data +
+                    "<div class='row m-0'>" +
+                    "<img height='25' class='rounded-circle' src='data:image/jpeg;base64," + user.image.avatar + "'>" +
+                    "<div class='ml-2'>" + user.nickname + "</div>" +
                     "</div>" +
                     "<div style='right: 5px; position: absolute; color: grey'>" +
                     date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate() + " " + date.getHours() + ":" + String(date.getMinutes()).padStart(2, '0') +
@@ -61,7 +62,7 @@ $('.chat').on('click', function () {
                         "<li class='list-group-item mb-1'>" +
                         "<div class='row m-0'>" +
                         "<div class='row m-0'>" +
-                        "<img width='25' height='25' class='rounded-circle' src='data:image/jpeg;base64," + item.user.avatar + "'>" +
+                        "<img height='25'  class='rounded-circle' src='data:image/jpeg;base64," + item.user.image.avatar + "'>" +
                         "<div class='ml-2'>" + item.user.nickname + "</div>" +
                         "</div>" +
                         "<div style='right: 5px; position: absolute; color: grey'>" +
@@ -112,7 +113,7 @@ $(function () {
 $('.delete-news-btn').on('click', function () {
     let newsId = $(this).closest('.card-container').attr('id').substring(4)
     if (confirm('Are you sure?')) {
-    $(this).closest('.card-container').fadeOut(1000)
+        $(this).closest('.card-container').fadeOut(1000)
         $.ajax({
             url: '/api/news/' + newsId,
             type: 'DELETE',

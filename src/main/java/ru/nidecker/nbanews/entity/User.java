@@ -32,7 +32,8 @@ import static org.hibernate.annotations.CascadeType.REMOVE;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "user_seq", sequenceName = "users_id_seq", initialValue = 5, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "users_id_seq")
     private Long id;
 
     @NotBlank
@@ -49,7 +50,8 @@ public class User implements UserDetails {
     private String password;
 
     @ToString.Exclude
-    private String avatar;
+    @ManyToOne
+    private Image image;
 
     private boolean enabled;
     private boolean locked;

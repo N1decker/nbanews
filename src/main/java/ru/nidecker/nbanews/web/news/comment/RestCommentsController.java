@@ -28,15 +28,15 @@ public class RestCommentsController {
 
     @Transactional
     @PostMapping("/{id}/comments")
-    public String addComment(@AuthenticationPrincipal User user,
-                             @RequestParam String message,
-                             @PathVariable long id) {
+    public User addComment(@AuthenticationPrincipal User user,
+                           @RequestParam String message,
+                           @PathVariable long id) {
         log.info("add comment to news with id = {} by user {}", id, user);
         Comment comment = new Comment();
         comment.setComment(message);
         comment.setNews(newsRepository.getReferenceById(id));
         comment.setUser(user);
         newsUserRelationshipRepository.save(comment);
-        return user.getNickname();
+        return user;
     }
 }

@@ -4,8 +4,4 @@ databaseChangeLog:
   - include:
       file: db/changelog/changeset/init/init-users.sql
   - include:
-      file: db/changelog/changeset/init/init-news.sql
-  - include:
-      file: db/changelog/changeset/init/init-comments.sql
-  - include:
-      file: db/changelog/changeset/init/init-like-dislike.sql
+      file: db/changelog/changeset/init/init-news-source.sql
