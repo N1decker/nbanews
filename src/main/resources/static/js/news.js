@@ -129,3 +129,50 @@ $('.delete-news-btn').on('click', function () {
         });
     }
 })
+
+let newsId;
+$('.update-news-btn').on('click', function () {
+    newsId = $(this).closest('.card-container').attr('id').substring(4)
+    const title = $(this).closest('.card-container').find('.card-title').text();
+    const subtitle = $(this).closest('.card-container').find('.card-subtitle').text();
+    const imgUrl = $(this).closest('.card-container').find('.card-img-top').attr('src');
+    const contentAuthor = $(this).closest('.card-container').find('.content-author-info').find('.text-center').text();
+
+    let $update = $('#update-news-modal');
+    $update.modal('show');
+    $update.find('#update-news-title').val(title);
+    $update.find('#update-news-subtitle').val(subtitle);
+    $update.find('#update-news-content-author').val(contentAuthor);
+    $update.find('#update-news-image-url').val(imgUrl);
+})
+$('#save-update-news-btn').on('click', function () {
+    let $update = $('#update-news-modal');
+    const updatedTitle = $update.find('#update-news-title').val();
+    const updatedSubtitle = $update.find('#update-news-subtitle').val();
+    const updatedImageUrl = $update.find('#update-news-image-url').val();
+    const updatedContentAuthor = $update.find('#update-news-content-author').val();
+
+    $.ajax({
+        url: '/api/news/' + newsId,
+        type: 'PUT',
+        data: {
+            'title': updatedTitle,
+            'subtitle': updatedSubtitle,
+            'contentAuthor': updatedContentAuthor,
+            'imageUrl': updatedImageUrl
+        },
+        success: function () {
+            successNotify('news successfully updated')
+            newsId = null;
+            $('#update-news-modal').modal('hide');
+        },
+        error: function (xhr) {
+            warningNotify(parseMessageToUnorderedListByOneDotForNotify(JSON.parse(xhr.responseText)['message']))
+        }
+    });
+})
+
+$('#close-update-news-btn').on('click', function () {
+    $('#update-news-modal').modal('hide');
+    newsId = null;
+})

@@ -1,0 +1,36 @@
+<div th:fragment="updateNews">
+    <div class="modal fade" id="update-news-modal" aria-hidden="true"
+         tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update news</h5>
+                </div>
+                <div class="text-center split  modal-body update-news-form">
+                    <div class="mb-3">
+                        <div>
+                            <label for="update-news-title">Title</label>
+                        </div>
+                        <input name="title" id="update-news-title">
+                    </div>
+                    <div class="mb-3">
+                        <div><label for="update-news-subtitle">Subtitle</label></div>
+                        <input name="subtitle" id="update-news-subtitle">
+                    </div>
+                    <div class="mb-3">
+                        <div><label for="update-news-image-url">Image url</label></div>
+                        <input name="image-url" id="update-news-image-url">
+                    </div>
+                    <div class="mb-3">
+                        <div><label for="update-news-content-author">Content author</label></div>
+                        <input type="text" name="content-author" id="update-news-content-author">
+                    </div>
+                </div>
+                <div style="text-align: center" class="mb-3">
+                    <button class="btn btn-primary" type="button" id="save-update-news-btn">Save</button>
+                    <button class="btn btn-secondary" type="button" id="close-update-news-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

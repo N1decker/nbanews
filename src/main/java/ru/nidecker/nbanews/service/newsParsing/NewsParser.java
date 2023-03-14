@@ -19,6 +19,7 @@ import ru.nidecker.nbanews.service.NewsService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -56,7 +57,7 @@ public class NewsParser {
         for (Element element : content) {
 
             String originalSource = element.getElementsByTag("a").size() == 0 ? "" :
-                    "https://www.espn.com" + element.getElementsByTag("a").get(0).attr("href");
+                    checkUrl(element.getElementsByTag("a").get(0).attr("href"), "espn");
 
             if (originalSource.equals("")) continue;
 
@@ -79,6 +80,7 @@ public class NewsParser {
         deleteSimilarNews(news, newsRepository.findTopN(10));
 
         if (news.size() > 0) {
+            Collections.reverse(news);
             newsService.saveAll(news);
         }
     }
@@ -104,5 +106,17 @@ public class NewsParser {
             }
         }
         return null;
+    }
+
+    private String checkUrl(String url, String sourceName) {
+        switch (sourceName.toLowerCase()) {
+            case "espn" -> {
+                if (url.startsWith("https:")) return url;
+                else return "https://www.espn.com" + url;
+            }
+            case "andscape" -> {
+            }
+        }
+        return url;
     }
 }

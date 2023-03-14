@@ -13,7 +13,7 @@ CREATE TABLE news
     news_date      date not null,
     news_time      time not null,
     source         varchar(255),
-    subhead        varchar(255),
+    subtitle        varchar(255),
     title          varchar(255),
     news_source_id int8 not null,
     constraint FK_news_source_news foreign key (news_source_id) references news_source

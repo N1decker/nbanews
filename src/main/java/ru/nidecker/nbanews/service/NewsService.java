@@ -3,6 +3,8 @@ package ru.nidecker.nbanews.service;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.nidecker.nbanews.dto.NewsDto;
 import ru.nidecker.nbanews.entity.News;
 import ru.nidecker.nbanews.entity.NewsSource;
 import ru.nidecker.nbanews.entity.Role;
@@ -65,7 +67,7 @@ public class NewsService {
 
         News news = new News();
         news.setTitle(title);
-        news.setSubhead(subhead);
+        news.setSubtitle(subhead);
         news.setSource(sourceURL);
         news.setImageUrl(imageURL);
         news.setNewsSource(newsSource);
@@ -91,5 +93,15 @@ public class NewsService {
 
     public void saveAll(List<News> news) {
         newsRepository.saveAll(news);
+    }
+
+    @Transactional
+    public void update(User user, long id, NewsDto newsDto) {
+        log.info("attempt to update news with id {} by user {}", id, user);
+        if (!user.getRoles().contains(Role.EDITOR)) {
+            throw new IllegalArgumentException("You don't have privileges");
+        }
+        News news = newsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("news by id = " + id + " not found"));
+        newsRepository.updateById(id, newsDto.getTitle(), newsDto.getSubtitle(), newsDto.getContentAuthor(), newsDto.getImageUrl());
     }
 }

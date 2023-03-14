@@ -29,7 +29,7 @@ public class News {
     @NotBlank
     private String title;
 
-    private String subhead;
+    private String subtitle;
 
     @NotBlank
     private String imageUrl;
