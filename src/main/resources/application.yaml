@@ -1,9 +1,9 @@
 spring:
   datasource:
-    username: user
-    password: password
+    username: ${SPRING_DATASOURCE_USERNAME:user}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/nbanews}
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/nbanews
 #    url: jdbc:postgresql://postgresql:5432/nbanews
   h2:
     console:
