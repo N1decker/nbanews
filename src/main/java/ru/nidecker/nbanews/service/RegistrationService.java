@@ -39,7 +39,7 @@ public class RegistrationService {
                         Set.of(Role.USER))
         );
 
-        String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
+        String link = "https://nbanews.herokuapp.com//api/v1/registration/confirm?token=" + token;
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getNickname(), link));
