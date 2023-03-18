@@ -32,7 +32,7 @@ public class NewsParser {
     private final NewsService newsService;
     private final ImageRepository imageRepository;
 
-    @Scheduled(fixedRate = 30000, timeUnit = TimeUnit.SECONDS, initialDelay = 30)
+    @Scheduled(fixedRate = 86400, timeUnit = TimeUnit.SECONDS, initialDelay = 30)
     @SneakyThrows
     public void parse() {
         parseEspnCom();
@@ -40,7 +40,7 @@ public class NewsParser {
 
     @Transactional
     @Modifying
-    @Scheduled(fixedRate = 30000, timeUnit = TimeUnit.SECONDS, initialDelay = 10)
+    @Scheduled(fixedRate = 86400, timeUnit = TimeUnit.SECONDS, initialDelay = 10)
     public void deleteUnusedImages() {
         imageRepository.deleteUnusedImages();
     }
