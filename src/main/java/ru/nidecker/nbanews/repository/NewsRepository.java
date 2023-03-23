@@ -11,7 +11,7 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 
     List<News> findAllByOrderByIdDesc();
 
-    @Query(value = "select * from News order by news_date desc, news_time desc LIMIT :limit", nativeQuery = true)
+    @Query(value = "select * from News order by id desc limit :limit", nativeQuery = true)
     List<News> findTopN(int limit);
 
     void deleteById(long id);
